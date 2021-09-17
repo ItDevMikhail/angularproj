@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box !important;
+}
+a {
+    color: #000;
+}
+.mat-card {
+    
+    margin: 0 auto;
+    margin-top: 20vh;
+    text-align: center;
+    max-width: 300px;
+}
+.mat-toolbar span {
+    margin: 0 auto;
+    a {
+        text-decoration: underline;
+        margin-right: 30px;
+        cursor: pointer;
+    }
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+textarea.mat-input-element {
+    border: 1px solid rgba(gray, 0.5);
+    height: 200px;
+    resize: none;
+    padding: 10px;
+}

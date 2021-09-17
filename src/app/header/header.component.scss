@@ -1,0 +1,36 @@
+button{
+    margin-right: 20px;
+}
+.btn-home{
+    background-color: rgba($color: orange, $alpha: 0.5);
+}
+.btn-logout{
+    background-color: rgba($color: red, $alpha: 0.5);
+}
+.mat-toolbar{
+    background-color: rgba($color: gray, $alpha: 0.3);
+}
+.danger{
+    color:#000;
+    text-align: center;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 40px;
+}
+.container{
+     position: absolute;
+     z-index: 9999;
+     width: 300px;
+     top: 20vh;
+     background-color: rgba($color: orange, $alpha: 0.4);
+     left: 50%;
+     transform: translateX(-50%);
+     border-radius: 5px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+.mat-toolbar{
+    display: flex;
+    justify-content: space-between;
+}

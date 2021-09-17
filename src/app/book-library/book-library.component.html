@@ -1,0 +1,9 @@
+<app-header></app-header>
+<h2>Books library</h2>
+<table mat-table>
+    <tr *ngFor="let book of books">
+        <a routerLink="/library/detail/{{book._id}}">
+         {{book.name}}
+        </a>
+    </tr>
+</table>

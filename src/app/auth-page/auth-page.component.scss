@@ -1,0 +1,32 @@
+.mat-card {
+    button + button{
+        margin-left: 20px;
+    }
+    margin: 0 auto;
+    margin-top: 20vh;
+    text-align: center;
+    max-width: 250px;
+}
+.mat-toolbar span{
+    margin: 0 auto;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+.correctness{
+    opacity: .5;
+    color: red;
+    font-size: 12px;
+}
+.danger{
+    color:#000;
+    text-align: center;
+    font-style: italic;
+}
+.container{
+     max-width: 400px;
+     background-color: rgba($color: red, $alpha: 0.4);
+     margin: 0 auto;
+     border-radius: 5px;
+}

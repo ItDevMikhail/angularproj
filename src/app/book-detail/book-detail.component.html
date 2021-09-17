@@ -1,0 +1,12 @@
+<app-header></app-header>
+<div class="container">
+  <div *ngIf="book">
+    <h2>{{book.name | uppercase}}</h2>
+    <div class="detail__page">
+      <div class="detail__name">
+        <label>Book name: <strong>{{book.name }}</strong> </label>
+      </div>
+      <p class="detail__description"><strong>Описание:</strong> <br> {{book.description}}</p>
+    </div>
+  </div>
+</div>
