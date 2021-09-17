@@ -1,11 +1,10 @@
-*{
+* {
     box-sizing: border-box !important;
 }
 a {
     color: #000;
 }
 .mat-card {
-    
     margin: 0 auto;
     margin-top: 20vh;
     text-align: center;
@@ -19,9 +18,12 @@ a {
         cursor: pointer;
     }
 }
-form{
+form {
     display: flex;
     flex-direction: column;
+}
+input {
+    padding: 0 10px;
 }
 textarea.mat-input-element {
     border: 1px solid rgba(gray, 0.5);

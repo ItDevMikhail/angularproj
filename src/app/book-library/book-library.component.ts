@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IBook } from '../iBook';
 import { BookService } from '../book.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-book-library',
@@ -11,13 +10,9 @@ import { Location } from '@angular/common';
 export class BookLibraryComponent implements OnInit {
   books: IBook[] = [];
 
-  constructor(private bookService: BookService,
-    private location: Location) { }
+  constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
-    this.bookService.getBooks().subscribe((data: any) => this.books=data);
-  }
-  goBack(): void {
-    this.location.back();
+    this.bookService.getBooks().subscribe((data: any) => this.books = data);
   }
 }

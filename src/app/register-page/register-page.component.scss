@@ -4,21 +4,21 @@
     text-align: center;
     width: 280px;
 }
-a{
+a {
     color: #000;
 }
-.mat-toolbar span{
+.mat-toolbar span {
     margin: 0 auto;
 }
-form{
+form {
     display: flex;
     flex-direction: column;
 }
-.mat-form-field{
+.mat-form-field {
     margin-bottom: 20px;
 }
-.correctness{
-    opacity: .5;
+.correctness {
+    opacity: 0.5;
     color: red;
     font-size: 12px;
 }

@@ -1,19 +1,14 @@
-<app-header></app-header>
-<div class="container">
-  <flash-messages class="danger"></flash-messages>
-  </div>
 <mat-card>
   <mat-card-title>Authorization</mat-card-title>
   <form id="auth" (submit)="userLogin()">
     <mat-form-field>
       <mat-label>Login</mat-label>
-      <input matInput type="text" name="login" [(ngModel)]="login" id="login" placeholder="Write login"
-        required />
+      <input matInput type="text" name="login" [(ngModel)]="login" id="login" placeholder="Write login" required />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input matInput type="password" name="password" id="password" #correctness="ngModel"
-        [(ngModel)]="password" placeholder="Write password" minlength="8" required />
+      <input matInput type="password" name="password" id="password" #correctness="ngModel" [(ngModel)]="password"
+        placeholder="Write password" minlength="8" required />
       <div class="correctness" *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
         <div *ngIf="correctness.errors?.minlength">
           Min possible value is 8*

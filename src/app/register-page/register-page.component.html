@@ -1,4 +1,3 @@
-<app-header></app-header>
 <mat-card>
     <mat-card-title>Registration</mat-card-title>
     <form (submit)="userRegister()">
@@ -9,13 +8,23 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>E-mail</mat-label>
-            <input matInput type="email" name="email" [(ngModel)]="email" id="email"
-                placeholder="Write e-mail" required/>
+            <input matInput type="email" name="email" [(ngModel)]="email" id="email" placeholder="Write e-mail"
+                required />
         </mat-form-field>
         <mat-form-field>
             <mat-label>Password</mat-label>
-            <input matInput type="password" name="password" id="password" #correctness="ngModel"
-                [(ngModel)]="password" placeholder="Write password" minlength="8" required />
+            <input matInput type="password" name="password" id="password" #correctness="ngModel" [(ngModel)]="password"
+                placeholder="Write password" minlength="8" required />
+            <div class="correctness" *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
+                <div *ngIf="correctness.errors?.minlength">
+                    Min possible value is 8*
+                </div>
+            </div>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Configm password</mat-label>
+            <input matInput type="password" name="confirmPass" id="confirmPass" #correctness="ngModel"
+                [(ngModel)]="confirmPass" placeholder="Write password" minlength="8" required />
             <div class="correctness" *ngIf="correctness.invalid && (correctness.dirty || correctness.touched)">
                 <div *ngIf="correctness.errors?.minlength">
                     Min possible value is 8*

@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IBook } from '../iBook';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../book.service';
 
 @Component({
@@ -14,19 +12,18 @@ export class BookDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
-    private location: Location
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.getBook();
   }
-  
-  getBook(): void{
+
+  getBook(): void {
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.bookService.getBook(id)
-    .subscribe(book => this.book = book)
-  }
-  goBack(): void {
-    this.location.back();
+      .subscribe(book => this.book = book, () => {
+        this.router.navigate(['home']);
+      })
   }
 }
