@@ -9,10 +9,16 @@ import { BookService } from '../book.service';
 })
 export class BookLibraryComponent implements OnInit {
   books: IBook[] = [];
+  add: Array<string> =[];
 
   constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe((data: any) => this.books = data);
+  }
+  addFavorite(book: IBook){
+    this.bookService.addFavorite(book)
+      .subscribe(
+        (data: any) => {if(!data.msg){this.add.push(book.name)} else { this.add = this.add.filter((remove: string) => remove != book.name)}console.log(this.add)})    
   }
 }

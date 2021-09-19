@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  token: any;
+  token: string | null | undefined;
+  name: string | null | undefined;
 
   constructor(private http: HttpClient) { }
   authUser(user: any): Observable<ISignInResponse> {
@@ -20,11 +21,15 @@ export class AuthService {
   }
   saveToken(data: any): void {
     localStorage.setItem('token', data.token);
+    localStorage.setItem('name', data.login);
     this.token = data.token;
+    this.name = data.login;
   }
   logout(): void {
     this.token = null;
+    this.name = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
   }
   IsLogin(): boolean {
     if (localStorage.getItem('token') !== null) {

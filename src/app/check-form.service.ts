@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckFormService {
 
-  constructor(private flashMessages: FlashMessagesService) { }
+  constructor(private messageService: MessageService,) { }
 
   checkLogin(login: String | undefined){
     if (login == undefined){
-      this.flashMessages.show("Логин не введен", {timeout: 2000})
+      this.messageService.add('Логин не введен')
       return false;
     } else{
       return true;
@@ -18,10 +18,10 @@ export class CheckFormService {
   }
   checkPassword(password: String | undefined){
     if (password == undefined){
-      this.flashMessages.show("Пароль не введен", {timeout: 2000})
+      this.messageService.add('Пароль не введен')
       return false;
     } else if(password.length < 8){
-      this.flashMessages.show("Минимальная длина пароля 8", { timeout: 2000})
+      this.messageService.add('Минимальная длина пароля 8')
       return false;
     } else{
       return true;
@@ -29,7 +29,7 @@ export class CheckFormService {
   }
   checkEmail(email: String | undefined){
     if (email == undefined){
-      this.flashMessages.show("Email не введен", {timeout: 2000})
+      this.messageService.add('Email не введен')
       return false;
     } else{
       return true;

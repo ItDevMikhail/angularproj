@@ -8,6 +8,7 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { AuthGuard } from './auth.guard';
 import { HomePageComponent } from './home-page/home-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'users/register', component: RegisterPageComponent },
   { path: 'library', component: BookLibraryComponent, canActivate: [AuthGuard] },
   { path: 'library/detail/:id', component: BookDetailComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'library/add', component: CreateBookComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 

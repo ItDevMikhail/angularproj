@@ -24,6 +24,10 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { HeaderComponent } from './header/header.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './footer/footer.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MessageBoxComponent } from './message-box/message-box.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import { FooterComponent } from './footer/footer.component';
     HomePageComponent,
     HeaderComponent,
     PageNotFoundComponent,
-    FooterComponent
+    FooterComponent,
+    MessageBoxComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +55,8 @@ import { FooterComponent } from './footer/footer.component';
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
+    MatIconModule,
+    MatTooltipModule,
     FlashMessagesModule.forRoot()
 
   ],

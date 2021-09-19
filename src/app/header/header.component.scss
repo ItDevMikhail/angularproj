@@ -1,16 +1,21 @@
 button {
     margin-right: 20px;
+    color: #fff;
+    &:hover{
+        background: rgba(0,0,0,.4);
+    }
+    &:disabled{
+        background: rgba(0,0,0,.4);
+        color: #fff !important;
+    }
 }
+// .btn-home {
+//     background-color: rgba($color: orange, $alpha: 0.5);
+// }
+// .btn-logout {
+//     background-color: rgba($color: red, $alpha: 0.5);
+// }
 
-.btn-home {
-    background-color: rgba($color: orange, $alpha: 0.5);
-}
-.btn-logout {
-    background-color: rgba($color: red, $alpha: 0.5);
-}
-.mat-toolbar {
-    background-color: rgba($color: gray, $alpha: 0.3);
-}
 .danger {
     color: #000;
     text-align: center;
@@ -35,7 +40,4 @@ button {
 .mat-toolbar {
     display: flex;
     justify-content: space-between;
-}
-.bd-navbar {
-    background-color: #6f42c1;
 }

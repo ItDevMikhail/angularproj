@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-auth-page',
@@ -13,14 +13,14 @@ export class AuthPageComponent {
   password: String | undefined;
   constructor(private authService: AuthService,
     private router: Router,
-    private flashMessages: FlashMessagesService) { }
+    private messageService: MessageService) { }
   userLogin(): any {
     const user = {
       login: this.login,
       password: this.password
     }
     if (this.password == undefined) {
-      this.flashMessages.show("Введите пароль", { timeout: 2000 })
+      this.messageService.add('Введите пароль')
       return false;
     }
     this.authService.authUser(user)
@@ -28,16 +28,16 @@ export class AuthPageComponent {
         (data: any) => {
           if (data.login == this.login) {
             this.authService.saveToken(data)
-            this.flashMessages.show("Вы успешно авторизовались", { timeout: 2000 });
+            this.messageService.add('Вы успешно авторизовались', 1000)
             this.router.navigate(['library']);
           } else {
             console.log(data.message);
           }
         }, (error) => {
           if ((error.message).includes('401')) {
-            this.flashMessages.show("Неверный пароль", { timeout: 1500 });
+            this.messageService.add('Неверный пароль')
           } else if ((error.message).includes('400')) {
-            this.flashMessages.show("Пользователь не найден", { timeout: 1500 });
+            this.messageService.add('Пользователь не найден')
           } else {
             console.log(error.message);
           }

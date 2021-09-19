@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BookService } from '../book.service';
 import { IBook } from '../iBook';
-import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-create-book',
@@ -17,37 +17,37 @@ export class CreateBookComponent{
   };
   responseBook: IBook | undefined;
   constructor(private bookService: BookService,
-    private flashMessages: FlashMessagesService,
+    private messageService: MessageService,
     private router: Router) { }
 
   add(books: IBook): any {
     console.log(books.description)
-    if (books.name.length <= 2) {
-      this.flashMessages.show("Введите название книги", { timeout: 2000 })
+    if (books.name.length < 2) {
+      this.messageService.add('Введите название книги')
       return false;
     }
     if (books.description.length <= 0) {
-      this.flashMessages.show("Напишите описание книги", { timeout: 2000 })
+      this.messageService.add('Напишите описание книги')
       return false;
     }
     if (books.description.length <= 20) {
-      this.flashMessages.show("Короткое описание", { timeout: 2000 })
+      this.messageService.add('Короткое описание')
       return false;
     }
     this.disabledButton = true
     this.bookService.addBook(books)
       .subscribe(
         (data: any) => {
-          this.flashMessages.show("Книга добавлена", { timeout: 1500 })
+          this.messageService.add('Книга добавлена')
           books.name = '',
             books.description = ''
           this.router.navigate([`library/detail/${data._id}`]);
         },
         (error) => {
           if ((error.message).includes('400')) {
-            this.flashMessages.show("Такая книга уже есть", { timeout: 2000 });
+            this.messageService.add('Такая книга уже есть')
           } else {
-            this.flashMessages.show("404 Bad request", { timeout: 2000 });
+            this.messageService.add('404 Bad request')
           }
         }, () => {
           setTimeout(() => { this.disabledButton = false }, 800)

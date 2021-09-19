@@ -18,7 +18,7 @@ export class HeaderComponent {
   }
 
   libraryMenu() {
-    if ((this.router.url).includes('library/a')) {
+    if ((this.router.url).includes('library/a') || (this.router.url).includes('library/d')) {
       return false
     } else if ((this.router.url).includes('library') || ((this.router.url).includes('home') && this.authService.IsLogin())) {
       return true
@@ -28,7 +28,14 @@ export class HeaderComponent {
   }
 
   nolibraryMenu() {
-    if ((this.router.url).includes('library/add') || (this.router.url).includes('library/detail') || ((this.router.url).includes('home') && this.authService.IsLogin())) {
+    if ((this.router.url).includes('library/add') || ((this.router.url).includes('home') && this.authService.IsLogin())) {
+      return true
+    } else {
+      return false
+    }
+  }
+  dashboardMenu() {
+    if ((this.router.url).includes('dashboard')){
       return true
     } else {
       return false

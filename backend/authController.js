@@ -1,7 +1,6 @@
 import Auth from './auth.js';
 import Hashing from './hash.js';
 import generateJWT from './token.js';
-import * as jwt from 'jsonwebtoken'
 
 class AuthController {
     async createUser(req, res) {

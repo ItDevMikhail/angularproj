@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CheckFormService } from '../check-form.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-register-page',
@@ -17,7 +17,7 @@ export class RegisterPageComponent {
   confirmPass: String | undefined;
 
   constructor(private checkForm: CheckFormService,
-    public flashMessages: FlashMessagesService,
+    private messageService: MessageService,
     private authService: AuthService,
     private router: Router) { }
 
@@ -36,7 +36,7 @@ export class RegisterPageComponent {
     }
     if ((this.confirmPass as string).includes((user.password as string)) && this.confirmPass?.length == user.password?.length) {
     } else {
-      this.flashMessages.show("Пароли не совпадают", { timeout: 1000 });
+      this.messageService.add('Пароли не совпадают')
       return false;
     }
     this.disabledButton = true;
@@ -44,19 +44,19 @@ export class RegisterPageComponent {
       .subscribe(
         (data: any) => {
           if (data = this.login) {
-            this.flashMessages.show("Пользователь добавлен", { timeout: 1500 });
+            this.messageService.add('Пользователь добавлен')
             this.router.navigate(['users/auth']);
           } else {
-            this.flashMessages.show("Пользователь не добавлен", { timeout: 2000 });
+            this.messageService.add('Пользователь не добавлен')
           }
         }, (error) => {
           if ((error.message).includes('400')) {
             setTimeout(() => {
               this.disabledButton = false;
             }, 700)
-            this.flashMessages.show("Логин занят", { timeout: 1500 });
+            this.messageService.add('Логин занят')
           } else {
-            this.flashMessages.show("404 Bad request", { timeout: 2000 });
+            this.messageService.add('404 Bad request')
           }
         }, () => {
           setTimeout(() => {

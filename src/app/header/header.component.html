@@ -1,19 +1,30 @@
 <header>
-    <mat-toolbar class="mat-toolbar mat-toolbar-single-row">
+    <mat-toolbar class="mat-toolbar mat-toolbar-single-row" color="primary">
         <div>
-            <button class="btn-home" mat-button color="base" routerLink="/home">Home</button>
-            <button mat-button color="base" routerLink="/library/add" disabled={{!libraryMenu()}}>Add book</button>
-            <button mat-raised-button color="base" routerLink="/library" disabled={{!nolibraryMenu()}}>Library</button>
+            <button mat-icon-button aria-label="Example icon button with a home icon" routerLink="/home">
+                <mat-icon>home</mat-icon>
+            </button>
+            <button *ngIf="authService.IsLogin()" mat-button routerLink="/library/add" disabled={{nolibraryMenu()}}>Add
+                book</button>
+            <button *ngIf="authService.IsLogin()" mat-button routerLink="/library"
+                disabled={{libraryMenu()}}>Library</button>
         </div>
         <div>
-            <button *ngIf="authService.IsLogin()" class="btn-logout" mat-raised-button color="base"
-                (click)="logout()">Logout</button>
-            <button *ngIf="!authService.IsLogin() && authMenu()" class="btn-login" mat-raised-button color="base"
-                routerLink="/users/auth">Login</button>
-            <button *ngIf="!authService.IsLogin() && registerMenu()" class="btn-register" mat-raised-button color="base"
-                routerLink="/users/register">Register</button>
+            <button *ngIf="authService.IsLogin()" mat-button routerLink="/dashboard" disabled={{dashboardMenu()}}>Dashboard</button>
+            <button mat-icon-button *ngIf="authService.IsLogin()" (click)="logout()" matTooltip="Logout">
+                <mat-icon>logout</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="!authService.IsLogin() && registerMenu()" routerLink="/users/register"
+                matTooltip="Registration">
+                <mat-icon>person_add_alt</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="!authService.IsLogin() && authMenu()" routerLink="/users/auth"
+                matTooltip="Login">
+                <mat-icon>login</mat-icon>
+            </button>
         </div>
     </mat-toolbar>
+    <app-message-box></app-message-box>
     <div class="containerr">
         <flash-messages class="danger"></flash-messages>
     </div>

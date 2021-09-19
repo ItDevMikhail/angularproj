@@ -1,4 +1,5 @@
 h2 {
+    margin-top: 20px;
     text-align: center;
 }
 a {
@@ -14,7 +15,19 @@ a {
 table {
     margin: 0 auto;
     tr {
-        height: 30px;
-        text-align: center;
+        min-height: 30px;
+        display: flex;
+        justify-content: space-between;
+        width: 250px;
+        align-items: center;
     }
+}
+.mat-icon{
+    color: gray;
+    text-align: right;
+    opacity: 0.5;
+}
+.addFavorite{
+    color: black;
+    opacity: 1;
 }

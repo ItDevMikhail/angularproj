@@ -4,5 +4,8 @@
         <a routerLink="/library/detail/{{book._id}}">
             {{book.name}}
         </a>
+        <button mat-icon-button (click)="addFavorite(book)">
+        <mat-icon [class.addFavorite]="add.includes(book.name)">grade</mat-icon>
+    </button>
     </tr>
 </table>
