@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'library', component: BookLibraryComponent, canActivate: [AuthGuard] },
   { path: 'library/detail/:id', component: BookDetailComponent, canActivate: [AuthGuard] },
   { path: 'library/add', component: CreateBookComponent, canActivate: [AuthGuard] },
-  { path: '**', component: PageNotFoundComponent },
+  { path: '**', component: PageNotFoundComponent }
 
 ];
 

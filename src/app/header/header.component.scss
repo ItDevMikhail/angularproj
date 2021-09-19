@@ -1,6 +1,7 @@
 button {
     margin-right: 20px;
 }
+
 .btn-home {
     background-color: rgba($color: orange, $alpha: 0.5);
 }
@@ -18,7 +19,7 @@ button {
     font-size: 20px;
     line-height: 40px;
 }
-.container {
+.containerr {
     position: absolute;
     z-index: 9999;
     width: 300px;
@@ -34,4 +35,7 @@ button {
 .mat-toolbar {
     display: flex;
     justify-content: space-between;
+}
+.bd-navbar {
+    background-color: #6f42c1;
 }
