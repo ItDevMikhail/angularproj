@@ -18,7 +18,6 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { BookService } from './book.service';
 import { AuthService } from './auth.service';
 import { CheckFormService } from './check-form.service';
-import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AuthGuard } from './auth.guard';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HeaderComponent } from './header/header.component';
@@ -57,7 +56,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    FlashMessagesModule.forRoot()
 
   ],
   providers: [BookService, AuthService, CheckFormService, AuthGuard],

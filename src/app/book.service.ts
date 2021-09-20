@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BookService {
+  favoriteBooks: Array<string> =[];
   constructor(private http: HttpClient) { }
   getBook(id: string) {
     return this.http.get(`http://localhost:5000/library/detail/${id}`)
@@ -19,7 +20,16 @@ export class BookService {
   }
   addFavorite(book: IBook){
     const login = localStorage.getItem('name');
-    const body = {name: book.name, description: book.description, login: login}
+    const lStorage = localStorage.getItem('favoriteBooks')
+    if (lStorage != null){
+    this.favoriteBooks = JSON.parse(lStorage)
+    }
+    if (this.favoriteBooks.includes(book.name)){
+      this.favoriteBooks = this.favoriteBooks.filter((remove: string) => remove != book.name)
+    } else {
+      this.favoriteBooks.push(book.name)
+    }
+    const body = {login: login, books : JSON.stringify(this.favoriteBooks)}
     return this.http.post('http://localhost:5000/library/addFavorite', body)
   }
 }

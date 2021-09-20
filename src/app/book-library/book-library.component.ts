@@ -18,7 +18,14 @@ export class BookLibraryComponent implements OnInit {
   }
   addFavorite(book: IBook){
     this.bookService.addFavorite(book)
-      .subscribe(
-        (data: any) => {if(!data.msg){this.add.push(book.name)} else { this.add = this.add.filter((remove: string) => remove != book.name)}console.log(this.add)})    
+      .subscribe((data: any) => {
+        this.add = data.books;
+        localStorage.setItem('favoriteBooks', data.books)
+      }, (e) => e.message)
+        // (data: any) => {if(!data.msg){
+        //   this.add.push(book.name)
+        // } else { 
+        //   this.add = this.add.filter((remove: string) => remove != book.name)
+        // }console.log(this.add)})    
   }
 }

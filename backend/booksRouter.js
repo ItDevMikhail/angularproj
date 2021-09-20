@@ -4,7 +4,7 @@ import BooksController from "./booksController.js";
 const booksRouter = new Router()
 
 booksRouter.post('/add', BooksController.create)
-booksRouter.post('/addFavorite', BooksController.addFavorite)
+booksRouter.post('/addFavorite', BooksController.addToFavorite)
 booksRouter.get('', BooksController.getAll)
 booksRouter.get('/detail/:id', BooksController.getOne)
 

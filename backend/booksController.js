@@ -40,17 +40,28 @@ class BooksController {
     }
     async addFavorite(req, res) {
         try {
-            const deleteBook = await userBooks.findOne({ name: req.body.name, login: req.body.login })
-            if (deleteBook) {
-                const deletBook = await userBooks.deleteOne({name: req.body.name,})
-                return res.json({deletBook, msg: 'This book is delete' })
-            }
-            const findBook = await Books.findOne({ name: req.body.name })
-            if (findBook) {
+            const checkBook = await userBooks.findOne({ login: req.body.login })
+            if (checkBook) {
+                const updateBook = await userBooks.findOneAndUpdate({ login: req.body.login, ...req.body })
+                return res.json(updateBook)
+            } else {
                 const addBook = await userBooks.create({ ...req.body })
-                res.json({ name: addBook.name, message: 'Add to Favorite' })
+                return res.json(addBook)
             }
-            res.status(500).json({ msg: 'Server error' })
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
+    async addToFavorite(req, res) {
+        try {
+            const checkUser = await userBooks.findOne({ login: req.body.login })
+            if (checkUser) {
+                const updateUser = await userBooks.findOneAndUpdate({ login: req.body.login, ...req.body })
+                return res.json(updateUser)
+            } else {
+                const addUser = await userBooks.create({ ...req.body })
+                return res.json(addUser)
+            }
         } catch (e) {
             res.status(500).json(e)
         }
