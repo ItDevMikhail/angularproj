@@ -1,10 +1,15 @@
 import jwt from 'jsonwebtoken'
 
-export default function generateJWT(user) {
+export function generateJWT(user) {
     const data = {
         login: user.login
     }
-    const secret = 'Dahotchtoto';
     const time = '6h';
-    return jwt.sign({data}, secret, {expiresIn: time});
+    const secret = 'Dahotchtoto';
+    return jwt.sign({ data }, secret, { expiresIn: time });
+}
+
+export function verifyJWT(token) {
+    const secret = 'Dahotchtoto';
+    return jwt.verify(token, secret)
 }

@@ -11,6 +11,7 @@
       <textarea matInput type="text" name="description" id="description" [(ngModel)]="books.description"
         placeholder="Write a description" required></textarea>
     </mat-form-field>
+    <input type="file" name="picture" (change)="addPicture($event)"/>    
     <button mat-raised-button color="base" (click)="add(books)" disabled="{{disabledButton}}">Add Book</button>
   </form>
 </mat-card>

@@ -5,33 +5,58 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class CheckFormService {
+  validationEmail = /.+\@.+\..+/;
 
   constructor(private messageService: MessageService,) { }
 
-  checkLogin(login: String | undefined){
-    if (login == undefined){
-      this.messageService.add('Логин не введен')
+  validationRegistration(login: String | undefined, email: String | undefined, password: String | undefined, confirmPassword: String | undefined) {
+    if (login == undefined || login == '') {
+      this.messageService.add('Введите логин')
       return false;
-    } else{
-      return true;
-    }
-  }
-  checkPassword(password: String | undefined){
-    if (password == undefined){
-      this.messageService.add('Пароль не введен')
+    } else if (password == undefined || password == '') {
+      this.messageService.add('Введите пароль')
       return false;
-    } else if(password.length < 8){
+    } else if (password.length < 8) {
       this.messageService.add('Минимальная длина пароля 8')
       return false;
+    } else if (email == undefined || email == '') {
+      this.messageService.add('Введите email')
+      return false;
+    } else if (email?.search(this.validationEmail)) {
+      this.messageService.add('Некорректный email')
+      return false;
+    } else if (confirmPassword == undefined || confirmPassword == '') {
+      this.messageService.add('Подтвердите пароль')
+      return false;
+    } else if ((confirmPassword as string).includes((password as string)) && confirmPassword?.length == password?.length) {
+      return true
+    } else {
+      this.messageService.add('Пароли не совпадают')
+      return false;
+    }
+  }
+  validationAuth(login: String | undefined, password: String | undefined){
+    if (login == undefined || login == ''){
+      this.messageService.add('Введите логин')
+      return false;
+    } else if (password == undefined || password == '') {
+      this.messageService.add('Введите пароль')
+      return false;
     } else{
       return true;
     }
   }
-  checkEmail(email: String | undefined){
-    if (email == undefined){
-      this.messageService.add('Email не введен')
+  validationCreateBook(book: any){
+    if (book.name.length < 2) {
+      this.messageService.add('Введите название книги')
       return false;
-    } else{
+    } else if (book.description.length <= 0) {
+      this.messageService.add('Напишите описание книги')
+      return false;
+    } else if (book.description.length <= 20) {
+      this.messageService.add('Короткое описание')
+      return false;
+    } else {
       return true;
     }
   }

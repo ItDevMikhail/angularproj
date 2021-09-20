@@ -4,7 +4,8 @@ const userBooks = new mongoose.Schema({
     login: {type: String},
     books: {type: String}, 
     name: {type: String},
-    description: {type: String}, 
+    description: {type: String},
+    picture: {type: String}, 
 })
 
 export default mongoose.model('userBooks', userBooks)

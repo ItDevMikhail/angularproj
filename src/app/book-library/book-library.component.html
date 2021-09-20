@@ -6,7 +6,7 @@
                 {{book.name}}
             </a>
             <button mat-icon-button (click)="addFavorite(book)">
-                <mat-icon [class.addFavorite]="add.includes(book.name)">grade</mat-icon>
+                <mat-icon [class.addFavorite]="add.includes(book._id!)">grade</mat-icon>
             </button>
         </div>
         <mat-divider></mat-divider>
