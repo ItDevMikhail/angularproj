@@ -1,11 +1,12 @@
 <div class="container">
-<h2>Name: {{name}}</h2>
-<h3>My books: </h3>
-<table mat-table>
-    <!-- <tr *ngFor="let book of books">
-        <a routerLink="/library/detail/{{book._id}}">
-            {{book.name}}
-        </a>
-    </tr> -->
-</table>
+    <h2>Name: {{name}}</h2>
+    <h3>My books: </h3>
+    <table mat-table>
+        <tr mat-row *ngFor="let book of books">
+            <a routerLink="/library/detail/{{book._id}}">
+                {{book.name}}
+            </a>
+            <mat-divider></mat-divider>
+        </tr>
+    </table>
 </div>

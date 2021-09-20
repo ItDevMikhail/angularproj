@@ -2,19 +2,9 @@ h2 {
     margin-top: 20px;
     text-align: center;
 }
-a {
-    color: #000;
-}
-.mat-toolbar {
-    a {
-        text-decoration: underline;
-        margin-right: 30px;
-        cursor: pointer;
-    }
-}
 table {
     margin: 0 auto;
-    tr {
+    .table {
         min-height: 30px;
         display: flex;
         justify-content: space-between;
@@ -30,4 +20,14 @@ table {
 .addFavorite{
     color: black;
     opacity: 1;
+}
+a {
+    color: #000;
+    text-decoration: none;
+    margin-right: 30px;
+    cursor: pointer;
+    &:hover{
+        color: #3f51b5;
+        font-weight: 500;
+    }
 }

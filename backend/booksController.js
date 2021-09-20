@@ -26,6 +26,19 @@ class BooksController {
             res.status(500).json(e)
         }
     }
+    async getToFavorite(req, res) {
+        try {
+            const { login } = req.params
+            if (!login) {
+                res.json()
+            } else {
+                const favorite = await userBooks.findOne({ login: login })
+                return res.json(favorite)
+            }
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
     async getOne(req, res) {
         try {
             const { id } = req.params
@@ -38,29 +51,29 @@ class BooksController {
             res.status(500).json(e)
         }
     }
-    async addFavorite(req, res) {
+    async addToFavorite(req, res) {
         try {
-            const checkBook = await userBooks.findOne({ login: req.body.login })
-            if (checkBook) {
-                const updateBook = await userBooks.findOneAndUpdate({ login: req.body.login, ...req.body })
-                return res.json(updateBook)
+            const checkUser = await userBooks.findOne({ login: req.body.login })
+            if (checkUser) {
+                const updateUser = await userBooks.findOneAndUpdate({ login: req.body.login }, { ...req.body }, { returnOriginal: false })
+                res.json(updateUser)
             } else {
-                const addBook = await userBooks.create({ ...req.body })
-                return res.json(addBook)
+                const addUser = await userBooks.create({ ...req.body })
+                res.json(addUser)
             }
         } catch (e) {
             res.status(500).json(e)
         }
     }
-    async addToFavorite(req, res) {
+    async getToDashboard(req, res) {
         try {
-            const checkUser = await userBooks.findOne({ login: req.body.login })
+            const checkUser = await userBooks.findOne({ login: req.body.login })             
             if (checkUser) {
-                const updateUser = await userBooks.findOneAndUpdate({ login: req.body.login, ...req.body })
-                return res.json(updateUser)
+                const books = JSON.parse(checkUser.books)
+                const book = await Books.find({name: books});
+                res.json(book)
             } else {
-                const addUser = await userBooks.create({ ...req.body })
-                return res.json(addUser)
+                res.json({ message: 'Not Found'})
             }
         } catch (e) {
             res.status(500).json(e)

@@ -20,7 +20,7 @@ export class HeaderComponent {
   libraryMenu() {
     if ((this.router.url).includes('library/a') || (this.router.url).includes('library/d')) {
       return false
-    } else if ((this.router.url).includes('library') || ((this.router.url).includes('home') && this.authService.IsLogin())) {
+    } else if ((this.router.url).includes('library') || !this.authService.IsLogin()) {
       return true
     } else {
       return false
@@ -28,7 +28,7 @@ export class HeaderComponent {
   }
 
   nolibraryMenu() {
-    if ((this.router.url).includes('library/add') || ((this.router.url).includes('home') && this.authService.IsLogin())) {
+    if ((this.router.url).includes('library/add') || !this.authService.IsLogin()) {
       return true
     } else {
       return false

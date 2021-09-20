@@ -18,6 +18,10 @@ export class BookService {
     const body = { name: books.name, description: books.description };
     return this.http.post('http://localhost:5000/library/add', body);
   }
+  getFavorite(){
+    const login = localStorage.getItem('name');
+    return this.http.get(`http://localhost:5000/library/addFavorite/${login}`)
+  }
   addFavorite(book: IBook){
     const login = localStorage.getItem('name');
     const lStorage = localStorage.getItem('favoriteBooks')
@@ -31,5 +35,10 @@ export class BookService {
     }
     const body = {login: login, books : JSON.stringify(this.favoriteBooks)}
     return this.http.post('http://localhost:5000/library/addFavorite', body)
+  }
+  addToDashboard(){
+    const login = localStorage.getItem('name');
+    const body = {login: login}
+    return this.http.post('http://localhost:5000/library/dashboard', body)
   }
 }

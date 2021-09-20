@@ -1,11 +1,14 @@
 <h2>Books library</h2>
 <table mat-table>
     <tr *ngFor="let book of books">
-        <a routerLink="/library/detail/{{book._id}}">
-            {{book.name}}
-        </a>
-        <button mat-icon-button (click)="addFavorite(book)">
-        <mat-icon [class.addFavorite]="add.includes(book.name)">grade</mat-icon>
-    </button>
+        <div class="table">
+            <a routerLink="/library/detail/{{book._id}}">
+                {{book.name}}
+            </a>
+            <button mat-icon-button (click)="addFavorite(book)">
+                <mat-icon [class.addFavorite]="add.includes(book.name)">grade</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
     </tr>
 </table>

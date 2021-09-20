@@ -25,8 +25,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FooterComponent } from './footer/footer.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material/divider';
 import { MessageBoxComponent } from './message-box/message-box.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MessageService } from './message.service';
 
 @NgModule({
   declarations: [
@@ -56,9 +58,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
+    MatDividerModule,
 
   ],
-  providers: [BookService, AuthService, CheckFormService, AuthGuard],
+  providers: [BookService, AuthService, CheckFormService, AuthGuard, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

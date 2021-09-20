@@ -7,15 +7,14 @@
     transform: translateX(-50%);
     border-radius: 15px;
     color: #000;
-    line-height: 40px;
+    line-height: 30px;
     background: #fff;
     border: 1px solid rgba($color: gray, $alpha: 0.5);
-    width: 250px;
+    width: 280px;
     .message__title {
-        background: linear-gradient(to right, red, yellow);
+        background: red;
         padding-left: 15px;
         text-align: left;
-        background-color: red;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         color: #fff;
@@ -23,7 +22,7 @@
         font-size: 12px;
     }
     .message__text {
-        font-size: 18px;
-        padding: 10px;
+        font-size: 17px;
+        padding: 5px;
     }
 }

@@ -28,8 +28,7 @@ export class AuthService {
   logout(): void {
     this.token = null;
     this.name = null;
-    localStorage.removeItem('token');
-    localStorage.removeItem('name');
+    localStorage.clear();
   }
   IsLogin(): boolean {
     if (localStorage.getItem('token') !== null) {

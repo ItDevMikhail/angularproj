@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from '../book.service';
+import { IBook } from '../iBook';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
   name?: string | null;
-  constructor() { }
+  books: IBook[] = [];
+  constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
     this.name = localStorage.getItem('name');
+    this.bookService.addToDashboard().subscribe((data: any) => this.books = data);
   }
-
-
 }
