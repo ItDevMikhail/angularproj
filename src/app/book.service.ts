@@ -3,15 +3,16 @@ import { IBook } from './iBook';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from './message.service';
 import { Router } from '@angular/router';
+import { SupportVariablesService } from './support-variables.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  favoriteBooks: Array<string> = [];
   constructor(private http: HttpClient,
     private messageService: MessageService,
-    private router: Router) { }
+    private router: Router,
+    public variableService: SupportVariablesService) { }
   getBook(id: string) {
     return this.http.get(`http://localhost:5000/library/detail/${id}`)
   }
@@ -36,27 +37,18 @@ export class BookService {
     );
   }
   getFavorite() {
-    const login = localStorage.getItem('name');
-    return this.http.get(`http://localhost:5000/library/addFavorite/${login}`)
+    const token = localStorage.getItem('token');
+    return this.http.get(`http://localhost:5000/library/addFavorite/${token}`)
   }
   addFavorite(book: IBook) {
     const token = localStorage.getItem('token');
-    const lStorage = localStorage.getItem('favoriteBooks')
-    if (lStorage != null) {
-      this.favoriteBooks = JSON.parse(lStorage)
-    }
-    const id = book._id as unknown as string
-    if (this.favoriteBooks.includes(id)) {
-      this.favoriteBooks = this.favoriteBooks.filter((remove: string) => remove != id)
-    } else {
-      this.favoriteBooks.push(id)
-    }
-    const body = { token: token, books: JSON.stringify(this.favoriteBooks) }
+    // const favoriteBooks: Array<string> = [];
+    // favoriteBooks.push(book._id!)
+    const body = { token: token, book: book._id}
     return this.http.post('http://localhost:5000/library/addFavorite', body)
   }
-  addToDashboard() {
-    const login = localStorage.getItem('name');
-    const body = { login: login }
-    return this.http.post('http://localhost:5000/library/dashboard', body)
+  getToDashboard() {
+    const token = localStorage.getItem('token');
+    return this.http.get(`http://localhost:5000/library/dashboard/${token}`)
   }
 }

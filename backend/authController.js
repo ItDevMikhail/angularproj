@@ -1,6 +1,7 @@
 import Auth from './auth.js';
 import Hashing from './hash.js';
 import { generateJWT } from './token.js';
+import { verifyJWT } from './token.js';
 
 class AuthController {
     async createUser(req, res) {
@@ -38,6 +39,21 @@ class AuthController {
                 } else {
                     res.status(401).json({ msg: 'Не верный пароль' })
                 }
+            }
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
+    async getUserName(req, res) {
+        try {
+            const token = req.params
+            if (!token) {
+                res.status(401)
+            } else {
+                const loginToken = verifyJWT(token.token)
+                const login = loginToken.data.login
+                const favorite = await Auth.findOne({ login: login })
+                return res.json({ login: favorite.login })
             }
         } catch (e) {
             res.status(500).json(e)

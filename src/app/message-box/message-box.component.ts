@@ -7,11 +7,10 @@ import { MessageService } from '../message.service';
   styleUrls: ['./message-box.component.scss']
 })
 export class MessageBoxComponent implements OnInit {
-  // @Input() message: string[] = [];
+
   constructor(public messageService: MessageService) { }
 
   ngOnInit(): void {
-  }
-  
+  }  
 
 }

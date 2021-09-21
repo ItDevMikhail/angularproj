@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
 import { IBook } from '../iBook';
+import { SupportVariablesService } from '../support-variables.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,12 +9,12 @@ import { IBook } from '../iBook';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  name?: string | null;
+  name: string = '';
   books: IBook[] = [];
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService,
+    public variableService: SupportVariablesService) { }
 
   ngOnInit(): void {
-    this.name = localStorage.getItem('name');
-    this.bookService.addToDashboard().subscribe((data: any) => this.books = data);
+    this.bookService.getToDashboard().subscribe((data: any) => this.books = data);
   }
 }

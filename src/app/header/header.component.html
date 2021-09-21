@@ -10,7 +10,7 @@
                 disabled={{libraryMenu()}}>Library</button>
         </div>
         <div>
-            <button *ngIf="authService.IsLogin()" mat-button routerLink="/dashboard" disabled={{dashboardMenu()}}>Dashboard</button>
+            <button *ngIf="authService.IsLogin()" mat-button routerLink="/dashboard" disabled={{dashboardMenu()}}>{{variableService.userName}}</button>
             <button mat-icon-button *ngIf="authService.IsLogin()" (click)="logout()" matTooltip="Logout">
                 <mat-icon>logout</mat-icon>
             </button>
