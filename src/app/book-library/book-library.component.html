@@ -1,14 +1,36 @@
 <h2>Books library</h2>
-<table mat-table>
-    <tr *ngFor="let book of books">
-        <div class="table">
-            <a routerLink="/library/detail/{{book._id}}">
-                {{book.name}}
-            </a>
-            <button mat-icon-button (click)="addFavorite(book)">
-                <mat-icon [class.addFavorite]="(variableService.favorite).includes(book._id!)">grade</mat-icon>
-            </button>
-        </div>
-        <mat-divider></mat-divider>
-    </tr>
-</table>
+<div class="container">
+    <table mat-table class="library__table">
+        <tr>
+            <th>All Books</th>
+        </tr>
+        <tr *ngFor="let book of books">
+            <td>
+                <div class="library__list">
+                    <a routerLink="/library/detail/{{book._id}}">
+                        {{book.name}}
+                    </a>
+                    <button mat-icon-button (click)="addFavorite(book)">
+                        <mat-icon [class.addFavorite]="(variableService.favorite).includes(book._id!)">grade</mat-icon>
+                    </button>
+                </div>
+                <mat-divider></mat-divider>
+            </td>
+        </tr>
+    </table>
+    <table mat-table class="library__table" *ngIf='favorite.length > 0 && variableService.favorite.length>2'>
+        <tr>
+            <th >Favorite</th>
+        </tr>
+        <tr *ngFor="let book of favorite">
+            <td>
+                <div class="library__list">
+                    <a routerLink="/library/detail/{{book._id}}">
+                        {{book.name}}
+                    </a>
+                </div>
+                <mat-divider></mat-divider>
+            </td>
+        </tr>
+    </table>
+</div>

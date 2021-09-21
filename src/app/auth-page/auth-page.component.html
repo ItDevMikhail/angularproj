@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>Authorization</mat-card-title>
-  <form id="auth" (submit)="userLogin()">
+  <form id="auth" (submit)="userLogin()" class="authForm">
     <mat-form-field>
       <mat-label>Login</mat-label>
       <input matInput type="text" name="login" [(ngModel)]="login" id="login" placeholder="Write login" required />
@@ -16,6 +16,6 @@
       </div>
     </mat-form-field>
   </form>
-  <button form="auth" mat-raised-button color="primary" type="submit" disabled="{{disabledButton}}">Login</button>
-  <button mat-raised-button color="base" routerLink="/users/register">Register</button>
+  <button class="authForm__login-btn" form="auth" mat-raised-button color="primary" type="submit" disabled="{{disabledButton}}">Login</button>
+  <button class="authForm__reg-btn" mat-raised-button routerLink="/users/register">Register</button>
 </mat-card>

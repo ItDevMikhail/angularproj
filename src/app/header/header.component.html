@@ -1,24 +1,27 @@
 <header>
     <mat-toolbar class="mat-toolbar mat-toolbar-single-row" color="primary">
-        <div>
-            <button mat-icon-button aria-label="Example icon button with a home icon" routerLink="/home">
+        <div class="nav__menu">
+            <button routerLinkActive="active" mat-icon-button aria-label="Example icon button with a home icon"
+                routerLink="/home">
                 <mat-icon>home</mat-icon>
             </button>
-            <button *ngIf="authService.IsLogin()" mat-button routerLink="/library/add" disabled={{nolibraryMenu()}}>Add
+            <button routerLinkActive="active" *ngIf="authService.IsLogin()" mat-button routerLink="/library/add">Add
                 book</button>
-            <button *ngIf="authService.IsLogin()" mat-button routerLink="/library"
-                disabled={{libraryMenu()}}>Library</button>
+            <button routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" *ngIf="authService.IsLogin()"
+                mat-button routerLink="/library">Library</button>
         </div>
-        <div>
-            <button *ngIf="authService.IsLogin()" mat-button routerLink="/dashboard" disabled={{dashboardMenu()}}>{{variableService.userName}}</button>
-            <button mat-icon-button *ngIf="authService.IsLogin()" (click)="logout()" matTooltip="Logout">
+        <div class="nav__menu">
+            <button routerLinkActive="active" *ngIf="authService.IsLogin()" mat-button
+                routerLink="/dashboard">{{variableService.userName}}</button>
+            <button routerLinkActive="active" mat-icon-button *ngIf="authService.IsLogin()" (click)="logout()"
+                matTooltip="Logout">
                 <mat-icon>logout</mat-icon>
             </button>
-            <button mat-icon-button *ngIf="!authService.IsLogin() && registerMenu()" routerLink="/users/register"
-                matTooltip="Registration">
+            <button routerLinkActive="active" mat-icon-button *ngIf="!authService.IsLogin()"
+                routerLink="/users/register" matTooltip="Registration">
                 <mat-icon>person_add_alt</mat-icon>
             </button>
-            <button mat-icon-button *ngIf="!authService.IsLogin() && authMenu()" routerLink="/users/auth"
+            <button routerLinkActive="active" mat-icon-button *ngIf="!authService.IsLogin()" routerLink="/users/auth"
                 matTooltip="Login">
                 <mat-icon>login</mat-icon>
             </button>
@@ -26,3 +29,5 @@
     </mat-toolbar>
     <app-message-box></app-message-box>
 </header>
+<mat-spinner class="library__spinner" diameter="50" *ngIf='variableService.spinner'></mat-spinner>
+<div class="error__message" *ngIf='variableService.errorMessage'>Service is unavailable. Please try again later</div>

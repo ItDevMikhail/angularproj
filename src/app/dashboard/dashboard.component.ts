@@ -9,12 +9,11 @@ import { SupportVariablesService } from '../support-variables.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  name: string = '';
   books: IBook[] = [];
   constructor(private bookService: BookService,
     public variableService: SupportVariablesService) { }
 
   ngOnInit(): void {
-    this.bookService.getToDashboard().subscribe((data: any) => this.books = data);
+    this.bookService.getToDashboard().subscribe((data: any) => { this.books = data }, (e) => { if (e.message) { e.message } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
   }
 }

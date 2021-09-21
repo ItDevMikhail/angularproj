@@ -24,7 +24,7 @@ export class CreateBookComponent {
     if (!this.checkForm.validationCreateBook(books)) {
       return false
     }
-
+    
     if (this.files) {
       const formData = new FormData();
       formData.append('picture', this.files[0]);
@@ -37,9 +37,9 @@ export class CreateBookComponent {
     this.disabledButton = true
     setTimeout(() => { this.disabledButton = false }, 800)
 
-    this.bookService.addBook(final_data)
+    this.bookService.createBook(final_data)
   }
-  
+
   addPicture(event: any) {
     let target = event.target || event.srcElement;
     this.files = target.files;

@@ -10,12 +10,20 @@
 .mat-toolbar span {
     margin: 0 auto;
 }
-form {
+.authForm {
     display: flex;
     flex-direction: column;
 }
+
 .correctness {
     opacity: 0.5;
     color: red;
     font-size: 12px;
+}
+.authForm__login-btn:hover {
+    background-color: #0e1d75;
+}
+.authForm__reg-btn:hover {
+    background-color: #3f51b5;
+    color: #fff;
 }

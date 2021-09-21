@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class SupportVariablesService {
   favorite: Array<string> = [];
-  userName: string = '';
+  userName?: string;
+  spinner?: boolean;
+  errorMessage?: boolean;
   
   constructor() { }
 

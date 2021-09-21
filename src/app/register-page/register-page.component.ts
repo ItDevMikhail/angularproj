@@ -26,7 +26,7 @@ export class RegisterPageComponent {
     if (!this.checkForm.validationRegistration(this.login, this.email, this.password, this.confirmPass)) {
       return false;
     }
-
+    
     this.disabledButton = true;
     setTimeout(() => {
       this.disabledButton = false;

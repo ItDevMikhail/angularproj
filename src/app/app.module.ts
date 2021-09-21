@@ -29,6 +29,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MessageBoxComponent } from './message-box/message-box.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MessageService } from './message.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { MessageService } from './message.service';
     MatIconModule,
     MatTooltipModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
 
   ],
   providers: [BookService, AuthService, CheckFormService, AuthGuard, MessageService],

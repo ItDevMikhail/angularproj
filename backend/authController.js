@@ -19,7 +19,7 @@ class AuthController {
             const reg = await Auth.create(newUser);
             res.json(reg.login)
         } catch (e) {
-            res.status(500).json({ success: false, msg: "Пользователь не был добавлен" })
+            res.status(500).json(e)
         }
     }
     async getUser(req, res) {

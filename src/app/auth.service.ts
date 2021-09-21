@@ -16,6 +16,8 @@ export class AuthService {
     private variableService: SupportVariablesService) { }
 
   authUser(user: any): any {
+    this.variableService.errorMessage = false;
+    this.variableService.spinner = true;
     const body = { login: user.login, password: user.password };
     return this.http.post('http://localhost:5000/users/auth', body).subscribe(
       (data: any) => {
@@ -33,12 +35,14 @@ export class AuthService {
         } else if ((error.message).includes('400')) {
           this.messageService.add('Пользователь не найден')
         } else {
-          console.log(error.message);
+          this.variableService.errorMessage = true;
         }
-      });
+      }).add(()=>{this.variableService.spinner = false});
   }
 
   registerUser(user: any): any {
+    this.variableService.errorMessage = false;
+    this.variableService.spinner = true;
     const body = { login: user.login, email: user.email, password: user.password };
     return this.http.post('http://localhost:5000/users/register', body).subscribe(
       (data: any) => {
@@ -52,10 +56,10 @@ export class AuthService {
         if ((error.message).includes('400')) {
           this.messageService.add('Логин занят')
         } else {
-          this.messageService.add('404 Bad request')
+          this.variableService.errorMessage = true;
         }
       }
-    );
+    ).add(()=>this.variableService.spinner = false);
   }
 
   getUserName(){

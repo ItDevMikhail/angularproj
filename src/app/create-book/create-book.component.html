@@ -1,6 +1,6 @@
 <mat-card>
-  <form>
-    <mat-card-title>Create Book</mat-card-title>
+  <form class="createForm">
+    <mat-card-title>Add Book</mat-card-title>
     <mat-form-field>
       <mat-label>Book name</mat-label>
       <input matInput type="text" name="name" id="name" [(ngModel)]="books.name"
@@ -8,7 +8,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <textarea matInput type="text" name="description" id="description" [(ngModel)]="books.description"
+      <textarea class="createForm__textarea" matInput type="text" name="description" id="description" [(ngModel)]="books.description"
         placeholder="Write a description" required></textarea>
     </mat-form-field>
     <input type="file" name="picture" (change)="addPicture($event)"/>    

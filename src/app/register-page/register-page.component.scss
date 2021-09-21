@@ -4,15 +4,12 @@
     text-align: center;
     width: 280px;
 }
-a {
-    color: #000;
-}
-.mat-toolbar span {
-    margin: 0 auto;
-}
-form {
+.regForm {
     display: flex;
     flex-direction: column;
+    button:hover{
+        background-color: #0e1d75;
+    }
 }
 .mat-form-field {
     margin-bottom: 20px;

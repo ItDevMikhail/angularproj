@@ -1,7 +1,7 @@
 <div class="container">
-    <h2>Name: {{variableService.userName}}</h2>
-    <h3>My books: </h3>
-    <table mat-table>
+    <h2 class="user__name">Name: {{variableService.userName}}</h2>
+    <h3 class="user__books">My books: </h3>
+    <table mat-table class="user__table">
         <tr mat-row *ngFor="let book of books">
             <a routerLink="/library/detail/{{book._id}}">
                 {{book.name}}

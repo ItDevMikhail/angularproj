@@ -1,23 +1,23 @@
-.container{
+.container {
     margin: 0 auto;
     max-width: 1200px;
     padding: 0 10px;
 }
-h2{
+.user__name {
     margin-top: 20px;
 }
-table{
+.user__table {
     width: 300px;
-    tr{
+    tr {
         min-height: 40px;
     }
-}
-a{
-    line-height: 40px;
-    color: #000;
-    text-decoration: none;
-    &:hover{
-        color: #3f51b5;
-        font-weight: 500;
+    a {
+        line-height: 40px;
+        color: #000;
+        text-decoration: none;
+        &:hover {
+            color: #3f51b5;
+            font-weight: 500;
+        }
     }
 }

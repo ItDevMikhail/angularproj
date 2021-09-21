@@ -2,14 +2,16 @@ h2 {
     margin-top: 20px;
     text-align: center;
 }
-table {
-    margin: 0 auto;
-    .table {
-        min-height: 30px;
+.library__table {
+    .library__list {
+        min-height: 40px;
         display: flex;
         justify-content: space-between;
         width: 250px;
         align-items: center;
+    }
+    .library__table-favorite{
+        padding-left: 40px;
     }
 }
 .mat-icon{
@@ -30,4 +32,9 @@ a {
         color: #3f51b5;
         font-weight: 500;
     }
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }

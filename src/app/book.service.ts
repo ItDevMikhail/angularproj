@@ -14,12 +14,16 @@ export class BookService {
     private router: Router,
     public variableService: SupportVariablesService) { }
   getBook(id: string) {
+    this.variableService.spinner = true;
     return this.http.get(`http://localhost:5000/library/detail/${id}`)
   }
   getBooks() {
+    this.variableService.errorMessage = false;
+    this.variableService.spinner = true;
     return this.http.get('http://localhost:5000/library')
   }
-  addBook(books: any) {
+  createBook(books: any) {
+    this.variableService.spinner = true;
     return this.http.post('http://localhost:5000/library/add', books).subscribe(
       (data: any) => {
         this.messageService.add('Книга добавлена')
@@ -31,10 +35,11 @@ export class BookService {
         if ((error.message).includes('400')) {
           this.messageService.add('Такая книга уже есть')
         } else {
-          this.messageService.add('404 Bad request')
+          this.variableService.errorMessage = true;
+          setTimeout(() => { this.variableService.errorMessage = false }, 5000);
         }
       }
-    );
+    ).add(()=> this.variableService.spinner = false);
   }
   getFavorite() {
     const token = localStorage.getItem('token');
@@ -42,12 +47,12 @@ export class BookService {
   }
   addFavorite(book: IBook) {
     const token = localStorage.getItem('token');
-    // const favoriteBooks: Array<string> = [];
-    // favoriteBooks.push(book._id!)
-    const body = { token: token, book: book._id}
+    const body = { token: token, book: book._id }
     return this.http.post('http://localhost:5000/library/addFavorite', body)
   }
   getToDashboard() {
+    this.variableService.errorMessage = false;
+    this.variableService.spinner = true;
     const token = localStorage.getItem('token');
     return this.http.get(`http://localhost:5000/library/dashboard/${token}`)
   }
