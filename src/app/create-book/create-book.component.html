@@ -2,16 +2,25 @@
   <form class="createForm">
     <mat-card-title>Add Book</mat-card-title>
     <mat-form-field>
-      <mat-label>Book name</mat-label>
+      <mat-label class="form__label">Book name</mat-label>
       <input matInput type="text" name="name" id="name" [(ngModel)]="books.name"
         placeholder="Write the title of the book" required />
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Description</mat-label>
-      <textarea class="createForm__textarea" matInput type="text" name="description" id="description" [(ngModel)]="books.description"
-        placeholder="Write a description" required></textarea>
+      <mat-label class="form__label">Description</mat-label>
+      <textarea class="createForm__textarea" matInput type="text" name="description" id="description"
+        [(ngModel)]="books.description" placeholder="Write a description" required></textarea>
     </mat-form-field>
-    <input type="file" name="picture" (change)="addPicture($event)"/>    
-    <button mat-raised-button color="base" (click)="add(books)" disabled="{{disabledButton}}">Add Book</button>
+    <mat-form-field>
+      <mat-label class="form__label">Add a book cover</mat-label>
+      <ngx-mat-file-input class="form__input-file" name="picture" [accept]="'image/jpeg,image/png'"
+        (change)="addPicture($event)">
+      </ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+      <div class="danger" *ngIf="bookServiceProp.errorMessage">
+        Select an image jpg/png
+      </div>
+    </mat-form-field>
+    <button mat-raised-button color="base" (click)="add(books)" disabled="{{bookServiceProp.disabledButton}}">Add Book</button>
   </form>
 </mat-card>

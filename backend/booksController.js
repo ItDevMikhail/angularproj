@@ -4,22 +4,6 @@ import fileService from './fileService.js';
 import { verifyJWT } from './token.js';
 
 class BooksController {
-    async create(req, res) {
-        try {
-            let newBook = {
-                name: req.body.name,
-                description: req.body.description,
-            }
-            const library = await Books.findOne({ name: newBook.name })
-            if (library) {
-                res.status(400).json({ msg: 'Такая книга уже есть' })
-            }
-            const book = await Books.create(newBook)
-            res.json(book)
-        } catch (e) {
-            res.status(500).json(e)
-        }
-    }
     async getAll(req, res) {
         try {
             const book = await Books.find();
@@ -102,19 +86,22 @@ class BooksController {
             res.status(500).json(e)
         }
     }
-    async createBooks(req, res) {
-        try {
-            let newBook = {
-                name: req.body.books.name,
-                description: req.body.books.description,
-            }
-            const library = await Books.findOne({ name: newBook.name })
+    async createBook(req, res) {
+        try {            
+            let filedata = req.file;
+            console.log(req);
+            const books = JSON.parse(req.body.books)
+            const library = await Books.findOne({ name: books.name })
+            console.log(books.name);
             if (library) {
                 res.status(400).json({ msg: 'Такая книга уже есть' })
+            } else if (!filedata) {
+                const book = await Books.create(books)
+                res.json(book)
+            } else {
+                const book = await Books.create({ ...books, picture: filedata.filename })
+                res.json(book)
             }
-            const fileName = fileService.saveFile(req.files.picture)
-            const book = await Books.create({ ...newBook, picture: fileName })
-            res.json(book)
         } catch (e) {
             res.status(500).json(e)
         }

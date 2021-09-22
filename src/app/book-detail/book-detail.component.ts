@@ -25,6 +25,6 @@ export class BookDetailComponent implements OnInit {
     this.variableService.spinner = true;
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.bookService.getBook(id)
-      .subscribe(book => this.book = book, (e) => { if (e.message) { e.message } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
+      .subscribe(book => this.book = book, (e) => { if ((e.message).includes(500)) { this.router.navigate(['library']) } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
   }
 }

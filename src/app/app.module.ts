@@ -30,6 +30,8 @@ import { MessageBoxComponent } from './message-box/message-box.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MessageService } from './message.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SupportVariablesService } from './support-variables.service';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -61,9 +63,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTooltipModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MaterialFileInputModule,
 
   ],
-  providers: [BookService, AuthService, CheckFormService, AuthGuard, MessageService],
+  providers: [BookService, AuthService, CheckFormService, AuthGuard, MessageService, SupportVariablesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

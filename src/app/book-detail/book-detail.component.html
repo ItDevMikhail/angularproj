@@ -7,5 +7,9 @@
       </div>
       <p class="detail__description"><strong>Описание:</strong> <br> {{book.description}}</p>
     </div>
+    <div *ngIf='book.picture' class="detail__picture">
+      <p><strong>Обложка книги:</strong></p> 
+    <img class="detail__img" src="http://localhost:5000/{{book.picture}}" alt="images"> 
+  </div>
   </div>
 </div>

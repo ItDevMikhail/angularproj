@@ -24,3 +24,13 @@ a {
 .detail__description {
     margin-top: 20px;
 }
+.detail__picture{
+    text-align: center;
+}
+.detail__img{
+    max-width: 400px;
+    max-height: 500px;
+    min-height: 250px;
+    min-width: 200px;
+    object-fit: cover;
+}

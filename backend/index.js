@@ -11,7 +11,7 @@ const app = express();
 const mongoUrl = 'mongodb+srv://user:user@cluster0.1cstu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 app.use(express.json())
-app.use(express.static('static'))
+app.use(express.static('backend/static'))
 
 
 app.use(function (req, res, next) {

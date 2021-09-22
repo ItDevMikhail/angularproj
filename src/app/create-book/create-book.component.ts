@@ -9,14 +9,16 @@ import { CheckFormService } from '../check-form.service';
   styleUrls: ['./create-book.component.scss']
 })
 export class CreateBookComponent {
-  disabledButton = false;
-  files: any;
+  // disabledButton = false;
+  // errorMessage = false;
+  // files: any;
   books: IBook = {
     name: '',
     description: ''
   };
   responseBook: IBook | undefined;
   constructor(private bookService: BookService,
+    public bookServiceProp: BookService,
     private checkForm: CheckFormService) { }
 
   add(books: IBook): any {
@@ -24,24 +26,20 @@ export class CreateBookComponent {
     if (!this.checkForm.validationCreateBook(books)) {
       return false
     }
-    
-    if (this.files) {
-      const formData = new FormData();
-      formData.append('picture', this.files[0]);
-      formData.append('books', JSON.stringify(books));
+    const formData = new FormData();
+    formData.append('books', JSON.stringify(books));
+    if (this.bookService.files) {
+      formData.append('picture', this.bookService.files[0]);
       final_data = formData;
     } else {
-      final_data = books;
+      final_data = formData;
     }
-
-    this.disabledButton = true
-    setTimeout(() => { this.disabledButton = false }, 800)
+    this.bookServiceProp.disabledButton = true
+    setTimeout(() => { this.bookServiceProp.disabledButton = false }, 800)
 
     this.bookService.createBook(final_data)
   }
-
-  addPicture(event: any) {
-    let target = event.target || event.srcElement;
-    this.files = target.files;
+  addPicture(event: any){
+    this.bookService.addPicture(event)
   }
 }

@@ -11,7 +11,7 @@ export class SupportVariablesService {
   
   constructor() { }
 
-  getUserName(login: string){
+  getUserName(login: string = 'userName'){
     this.userName = login
   }
   varFavorite(message: Array<string>) {

@@ -9,6 +9,9 @@ import { SupportVariablesService } from './support-variables.service';
   providedIn: 'root'
 })
 export class BookService {
+  disabledButton?: boolean = false;
+  errorMessage?: boolean;
+  files?: any;
   constructor(private http: HttpClient,
     private messageService: MessageService,
     private router: Router,
@@ -39,7 +42,7 @@ export class BookService {
           setTimeout(() => { this.variableService.errorMessage = false }, 5000);
         }
       }
-    ).add(()=> this.variableService.spinner = false);
+    ).add(() => this.variableService.spinner = false);
   }
   getFavorite() {
     const token = localStorage.getItem('token');
@@ -55,5 +58,23 @@ export class BookService {
     this.variableService.spinner = true;
     const token = localStorage.getItem('token');
     return this.http.get(`http://localhost:5000/library/dashboard/${token}`)
+  }
+  addPicture(event: any) {
+    let target = event.target || event.srcElement;
+    console.log(target.files);
+    if (target.files.length > 0) {
+      if ((target.files[0].type).includes('image')) {
+        this.files = target.files;
+        this.disabledButton = false;
+        this.errorMessage = false;
+      } else {
+        console.log('проверьте формат файла');
+        this.disabledButton = true;
+        this.errorMessage = true;
+      }
+    } else {
+      this.disabledButton = false;
+      this.errorMessage = false;
+    }
   }
 }

@@ -20,6 +20,10 @@
         &:hover {
             background: #0e1d75;
         }
+        &:disabled {
+            background: #0e1d75;
+            opacity: 0.7;
+        }
     }
 }
 
@@ -28,4 +32,13 @@
     height: 200px;
     resize: none;
     padding: 10px;
+}
+.danger {
+    color: red;
+}
+.mat-icon {
+    cursor: pointer;
+}
+.form__label{
+    padding-left: 5px;
 }
