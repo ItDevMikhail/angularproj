@@ -42,7 +42,7 @@ export class BookService {
           setTimeout(() => { this.variableService.errorMessage = false }, 5000);
         }
       }
-    ).add(() => this.variableService.spinner = false);
+    ).add(() => {this.variableService.spinner = false, this.files = undefined});
   }
   getFavorite() {
     const token = localStorage.getItem('token');
@@ -59,6 +59,12 @@ export class BookService {
     const token = localStorage.getItem('token');
     return this.http.get(`http://localhost:5000/library/dashboard/${token}`)
   }
+
+  deleteBook(book: IBook) {
+    const body = { id: book._id }
+    return this.http.delete('http://localhost:5000/library', ({ body: body}))
+  }
+
   addPicture(event: any) {
     let target = event.target || event.srcElement;
     console.log(target.files);
@@ -77,4 +83,5 @@ export class BookService {
       this.errorMessage = false;
     }
   }
+
 }

@@ -32,6 +32,8 @@ import { MessageService } from './message.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SupportVariablesService } from './support-variables.service';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BookLibraryDialog } from './book-library/book-library.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     PageNotFoundComponent,
     FooterComponent,
     MessageBoxComponent,
-    DashboardComponent
+    DashboardComponent,
+    BookLibraryDialog,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatDividerModule,
     MatProgressSpinnerModule,
     MaterialFileInputModule,
+    MatDialogModule,
 
   ],
   providers: [BookService, AuthService, CheckFormService, AuthGuard, MessageService, SupportVariablesService],

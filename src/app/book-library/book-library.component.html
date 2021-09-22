@@ -7,6 +7,9 @@
         <tr *ngFor="let book of books">
             <td>
                 <div class="library__list">
+                    <button mat-icon-button (click)="deleteBook(book)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
                     <a routerLink="/library/detail/{{book._id}}">
                         {{book.name}}
                     </a>

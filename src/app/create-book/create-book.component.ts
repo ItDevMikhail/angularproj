@@ -9,9 +9,6 @@ import { CheckFormService } from '../check-form.service';
   styleUrls: ['./create-book.component.scss']
 })
 export class CreateBookComponent {
-  // disabledButton = false;
-  // errorMessage = false;
-  // files: any;
   books: IBook = {
     name: '',
     description: ''

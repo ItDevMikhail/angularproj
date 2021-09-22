@@ -1,7 +1,7 @@
 import Books from './books.js';
 import userBooks from './userBooks.js';
-import fileService from './fileService.js';
 import { verifyJWT } from './token.js';
+import { unlink } from 'fs';
 
 class BooksController {
     async getAll(req, res) {
@@ -43,7 +43,7 @@ class BooksController {
         try {
             const token = req.params
             if (!token) {
-                res.json()
+                res.status(401)
             } else {
                 const loginToken = verifyJWT(token.token)
                 const login = loginToken.data.login
@@ -55,7 +55,6 @@ class BooksController {
                 } else {
                     res.json({ message: 'Not Found' })
                 }
-                return res.json({ books: favorite.books })
             }
         } catch (e) {
             res.status(500).json(e)
@@ -87,12 +86,10 @@ class BooksController {
         }
     }
     async createBook(req, res) {
-        try {            
+        try {
             let filedata = req.file;
-            console.log(req);
             const books = JSON.parse(req.body.books)
             const library = await Books.findOne({ name: books.name })
-            console.log(books.name);
             if (library) {
                 res.status(400).json({ msg: 'Такая книга уже есть' })
             } else if (!filedata) {
@@ -102,6 +99,21 @@ class BooksController {
                 const book = await Books.create({ ...books, picture: filedata.filename })
                 res.json(book)
             }
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
+    async deleteBook(req, res) {
+        try {
+            const bookId = req.body.id
+            const deleteBook = await Books.findByIdAndDelete(bookId)
+            if (deleteBook.picture) {
+                unlink(`backend/static/${deleteBook.picture}`, (err) => {
+                    if (err) throw err;
+                    console.log(`picture: ${deleteBook.picture} was deleted`);
+                })
+            }
+            res.json(deleteBook)
         } catch (e) {
             res.status(500).json(e)
         }
