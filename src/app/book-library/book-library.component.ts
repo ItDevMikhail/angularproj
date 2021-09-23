@@ -13,7 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 export class BookLibraryComponent implements OnInit {
   @Input() diameter: number = 50
   books: IBook[] = [];
-  favorite: IBook[] = [];
 
   constructor(private bookService: BookService,
     public variableService: SupportVariablesService,
@@ -22,21 +21,32 @@ export class BookLibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBooks();
-    this.bookService.getFavorite().subscribe((data: any) => { this.variableService.varFavorite(data.books) }, (e) => { e.message }).add(() => this.variableService.spinner = false);
+    this.bookService.getFavorite();
     this.authService.getUserName()?.subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => { e.message });
-    this.bookService.getToDashboard().subscribe((data: any) => { this.favorite = data }, (e) => { e.message }).add(() => this.variableService.spinner = false);
+    this.bookService.getToDashboard()
   }
-
+  getFavorite(book: any): boolean {
+    if (this.variableService.Favorite.length) {
+      let favor = (this.variableService.Favorite).filter((data: any) => data._id == book)
+      if (favor.length > 0) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
+  }
   getBooks() {
-    this.bookService.getBooks().subscribe((data: any) => { this.books = data }, (e) => { if ((e.message).includes('400')) { e.message } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
+    this.bookService.getBooks().subscribe((data: any) => { this.books = data }, (e) => { if ((e.message).includes('404')) { console.log('Книг нет') } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
   }
 
   addFavorite(book: IBook) {
     this.bookService.addFavorite(book)
       .subscribe((data: any) => {
-        this.variableService.varFavorite(data.books);
-        this.bookService.getToDashboard().subscribe((data: any) => { this.favorite = data }, e => e.message).add(() => this.variableService.spinner = false);
-      }, (e) => e.message).add(() => this.variableService.spinner = false);
+        
+      }, (e) => e.message).add(() => { this.variableService.spinner = false; this.bookService.getFavorite(); this.bookService.getToDashboard()});
+
   }
 
   deleteBook(book: IBook) {

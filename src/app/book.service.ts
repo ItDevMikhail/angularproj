@@ -46,18 +46,18 @@ export class BookService {
   }
   getFavorite() {
     const token = localStorage.getItem('token');
-    return this.http.get(`http://localhost:5000/library/addFavorite/${token}`)
+    return this.http.get(`http://localhost:5000/library/addFavorite/${token}`).subscribe((data: any) => { this.variableService.Favorite = data }, (e) => { e.message }).add(() => this.variableService.spinner = false);
   }
   addFavorite(book: IBook) {
     const token = localStorage.getItem('token');
-    const body = { token: token, book: book._id }
+    const body = { token: token, bookId: book._id }
     return this.http.post('http://localhost:5000/library/addFavorite', body)
   }
   getToDashboard() {
     this.variableService.errorMessage = false;
     this.variableService.spinner = true;
     const token = localStorage.getItem('token');
-    return this.http.get(`http://localhost:5000/library/dashboard/${token}`)
+    return this.http.get(`http://localhost:5000/library/dashboard/${token}`).subscribe((data: any) => { this.variableService.favorite = data }, (e) => { if (e.message) { e.message } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
   }
 
   deleteBook(book: IBook) {

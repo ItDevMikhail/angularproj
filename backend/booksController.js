@@ -7,7 +7,11 @@ class BooksController {
     async getAll(req, res) {
         try {
             const book = await Books.find();
-            return res.json(book);
+            if (book.length > 0) {
+                res.json(book);
+            } else {
+                res.status(404).json({ message: 'Библиотека книг пуста' })
+            }
         } catch (e) {
             res.status(500).json(e)
         }
@@ -17,9 +21,10 @@ class BooksController {
             const { id } = req.params
             if (!id) {
                 res.status(400).json({ message: 'Id не указан' })
+            } else {
+                const book = await Books.findById(id);
+                res.json(book);
             }
-            const book = await Books.findById(id);
-            return res.json(book);
         } catch (e) {
             res.status(500).json(e)
         }
@@ -32,8 +37,8 @@ class BooksController {
             } else {
                 const loginToken = verifyJWT(token.token)
                 const login = loginToken.data.login
-                const favorite = await userBooks.findOne({ login: login })
-                return res.json({ books: favorite.books })
+                const favorite = await userBooks.find({ userName: login })
+                return res.json(favorite)
             }
         } catch (e) {
             res.status(500).json(e)
@@ -47,11 +52,14 @@ class BooksController {
             } else {
                 const loginToken = verifyJWT(token.token)
                 const login = loginToken.data.login
-                const favorite = await userBooks.findOne({ login: login })
-                if (favorite) {
-                    const books = JSON.parse(favorite.books)
-                    const book = await Books.find({ _id: books });
-                    res.json(book)
+                const favorite = await userBooks.find({ userName: login })
+                if (favorite.length > 0) {
+                    let booksId = [];
+                    for(let i = 0; i < favorite.length; i++) {
+                       booksId[i] = favorite[i]._id
+                    }
+                    const getFav = await Books.find({_id: booksId})
+                    res.json(getFav)
                 } else {
                     res.json({ message: 'Not Found' })
                 }
@@ -64,22 +72,13 @@ class BooksController {
         try {
             const token = verifyJWT(req.body.token)
             const login = token.data.login
-            const book = req.body.book
-            const checkUser = await userBooks.findOne({ login: login })
-            let parseUserBooks;
-            if (checkUser) {
-                parseUserBooks = JSON.parse(checkUser.books)
-                if (parseUserBooks.includes(book)) {
-                    parseUserBooks = parseUserBooks.filter((remove) => remove != book)
-                } else {
-                    parseUserBooks.push(book)
-                }
-                const updateBooks = JSON.stringify(parseUserBooks)
-                const updateUser = await userBooks.findOneAndUpdate({ login: login }, { books: updateBooks }, { returnOriginal: false })
-                res.json({ books: updateUser.books })
+            const bookId = req.body.bookId
+            const deleteFavorite = await userBooks.findOneAndDelete({ userName: login, _id: bookId })
+            if (!deleteFavorite) {
+                const addFavorite = await userBooks.create({ userName: login, _id: bookId })
+                res.json({ bookId: addFavorite.bookId, message: 'Successfully added to favorites' })
             } else {
-                const addUser = await userBooks.create({ login: login, books: `["${req.body.book}"]` })
-                res.json({ books: addUser.books })
+                res.send(`bookId: ${bookId} was deleted`)
             }
         } catch (e) {
             res.status(500).json(e)
@@ -107,6 +106,7 @@ class BooksController {
         try {
             const bookId = req.body.id
             const deleteBook = await Books.findByIdAndDelete(bookId)
+            const f = await userBooks.find()
             if (deleteBook.picture) {
                 unlink(`backend/static/${deleteBook.picture}`, (err) => {
                     if (err) throw err;

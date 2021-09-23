@@ -14,10 +14,11 @@ class AuthController {
             const user = await Auth.findOne({ login: newUser.login })
             if (user) {
                 res.status(400).json({ msg: 'Логин занят' })
+            } else {
+                newUser.password = Hashing(newUser.password)
+                const reg = await Auth.create(newUser);
+                res.json(reg.login)
             }
-            newUser.password = Hashing(newUser.password)
-            const reg = await Auth.create(newUser);
-            res.json(reg.login)
         } catch (e) {
             res.status(500).json(e)
         }

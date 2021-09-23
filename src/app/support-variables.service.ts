@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
+import { IBook } from './iBook';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupportVariablesService {
-  favorite: Array<string> = [];
+  favorite: IBook[] = [];
   userName?: string;
   spinner?: boolean;
   errorMessage?: boolean;
+  Favorite: any;
   
   constructor() { }
 
   getUserName(login: string = 'userName'){
     this.userName = login
   }
-  varFavorite(message: Array<string>) {
+  varFavorite(message: any) {
     this.favorite = message;
   }
 }
