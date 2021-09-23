@@ -1,11 +1,22 @@
 <h2>Books library</h2>
+<form class="search__form">
+<mat-form-field class="search__field">
+    <mat-label>Search book</mat-label>
+    <input matInput type="text" name="login" [(ngModel)]="search" id="login" placeholder="Write login" (ngModelChange)='changed($event)' />
+    <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+    </button>
+</mat-form-field>
+</form>
 <div class="container">
     <table mat-table class="library__table">
         <tr>
             <th>All Books</th>
         </tr>
-        <tr *ngFor="let book of books">
-            <!-- <td></td> -->
+        <tr *ngIf="variableService.books.length<1">
+            <th>Библиотека пуста</th>
+        </tr>
+        <tr *ngFor="let book of variableService.books">
             <td>
                 <div class="library__list">
                     <button mat-icon-button (click)="deleteBook(book)">
@@ -24,7 +35,7 @@
     </table>
     <table mat-table class="library__table" *ngIf='this.variableService.favorite.length > 0'>
         <tr>
-            <th >Favorite</th>
+            <th>Favorite</th>
         </tr>
         <tr *ngFor="let booK of this.variableService.favorite">
             <td>

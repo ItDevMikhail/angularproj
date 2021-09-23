@@ -44,6 +44,20 @@ class BooksController {
             res.status(500).json(e)
         }
     }
+    async getSearch(req, res) {
+        try {
+            const search = req.params.search
+            if (!search) {
+                const book = await Books.find();
+                    res.json(book);
+            } else {
+            const book = await Books.find({name: new RegExp('.*' + search + '.*')})
+                return res.json(book)
+            }
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
     async getToDashboard(req, res) {
         try {
             const token = req.params
@@ -106,12 +120,7 @@ class BooksController {
         try {
             const bookId = req.body.id
             const deleteBook = await Books.findByIdAndDelete(bookId)
-            const favorite = await userBooks.find({ bookId: bookId })
-            if (favorite.length > 0) {
-                for (let i = 0; i < favorite.length; i++) {
-                    await userBooks.findByIdAndDelete(favorite[i]._id)
-                }
-            }
+            const favorite = await userBooks.deleteMany({ bookId: bookId })
             if (deleteBook.picture) {
                 unlink(`backend/static/${deleteBook.picture}`, (err) => {
                     if (err) throw err;

@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
     public variableService: SupportVariablesService) { }
 
   ngOnInit(): void {
-    this.authService.getUserName()?.subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => e.message);
+    this.authService.getUserName();
   }
   logout() {
     this.authService.logout();

@@ -29,6 +29,7 @@ booksRouter.post('/addFavorite', BooksController.addToFavorite)
 booksRouter.get('/addFavorite/:token', BooksController.getToFavorite)
 booksRouter.get('/dashboard/:token', BooksController.getToDashboard)
 booksRouter.get('', BooksController.getAll)
+booksRouter.get('/search/:search', BooksController.getSearch)
 booksRouter.get('/detail/:id', BooksController.getOne)
 booksRouter.delete('', BooksController.deleteBook)
 

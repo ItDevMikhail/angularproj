@@ -23,7 +23,15 @@ export class BookService {
   getBooks() {
     this.variableService.errorMessage = false;
     this.variableService.spinner = true;
-    return this.http.get('http://localhost:5000/library')
+    return this.http.get('http://localhost:5000/library').subscribe((data: any) => { this.variableService.books = data }, (e) => { if ((e.message).includes('404')) { console.log('Книг нет'); this.variableService.books=[]} else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
+  }
+  getSearch(search: string) {
+    if((search.trim()).length<1){
+      return this.getBooks()
+    }
+    this.variableService.errorMessage = false;
+    this.variableService.spinner = true;
+    return this.http.get(`http://localhost:5000/library/search/${search}`).subscribe((data: any)=> { this.variableService.books = data}).add(()=>{this.variableService.spinner = false;})
   }
   createBook(books: any) {
     this.variableService.spinner = true;
@@ -51,7 +59,7 @@ export class BookService {
   addFavorite(book: IBook) {
     const token = localStorage.getItem('token');
     const body = { token: token, bookId: book._id }
-    return this.http.post('http://localhost:5000/library/addFavorite', body)
+    return this.http.post('http://localhost:5000/library/addFavorite', body).subscribe((data: any) => {data}, (e) => e.message).add(() => { this.variableService.spinner = false; this.getFavorite(); this.getToDashboard()});
   }
   getToDashboard() {
     this.variableService.errorMessage = false;

@@ -10,6 +10,7 @@ export class SupportVariablesService {
   spinner?: boolean;
   errorMessage?: boolean;
   Favorite: any;
+  books: IBook[] = [];
   
   constructor() { }
 

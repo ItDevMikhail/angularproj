@@ -4,6 +4,12 @@ import { BookService } from '../book.service';
 import { SupportVariablesService } from '../support-variables.service';
 import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs/internal/Subject';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { pipe } from 'rxjs';
+
+
+
 
 @Component({
   selector: 'app-book-library',
@@ -12,18 +18,23 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class BookLibraryComponent implements OnInit {
   @Input() diameter: number = 50
-  books: IBook[] = [];
+  search: string = '';
+  modelChanged: Subject<string> = new Subject<string>();
 
   constructor(private bookService: BookService,
     public variableService: SupportVariablesService,
     private authService: AuthService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {
+    this.modelChanged.pipe(
+      debounceTime(500), distinctUntilChanged())
+      .subscribe((search: string) => { this.search = search; this.bookService.getSearch(this.search) });
+  }
 
   ngOnInit(): void {
     this.getBooks();
     this.bookService.getFavorite();
-    this.authService.getUserName()?.subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => { e.message });
-    this.bookService.getToDashboard()
+    this.authService.getUserName();
+    this.bookService.getToDashboard();
   }
   getFavorite(book: any): boolean {
     if (this.variableService.Favorite.length) {
@@ -38,15 +49,19 @@ export class BookLibraryComponent implements OnInit {
     }
   }
   getBooks() {
-    this.bookService.getBooks().subscribe((data: any) => { this.books = data }, (e) => { if ((e.message).includes('404')) { console.log('Книг нет'); this.books=[]} else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
+    this.bookService.getBooks()
   }
 
   addFavorite(book: IBook) {
     this.bookService.addFavorite(book)
-      .subscribe((data: any) => {
-        
-      }, (e) => e.message).add(() => { this.variableService.spinner = false; this.bookService.getFavorite(); this.bookService.getToDashboard()});
 
+  }
+  changed(text: string) {
+    this.modelChanged.next(text);
+  }
+  searchBook() {
+    console.log(this.search)
+    this.bookService.getSearch(this.search)
   }
 
   deleteBook(book: IBook) {
