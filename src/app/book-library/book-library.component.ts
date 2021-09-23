@@ -27,7 +27,7 @@ export class BookLibraryComponent implements OnInit {
   }
   getFavorite(book: any): boolean {
     if (this.variableService.Favorite.length) {
-      let favor = (this.variableService.Favorite).filter((data: any) => data._id == book)
+      let favor = (this.variableService.Favorite).filter((data: any) => data.bookId == book)
       if (favor.length > 0) {
         return true
       } else {
@@ -38,7 +38,7 @@ export class BookLibraryComponent implements OnInit {
     }
   }
   getBooks() {
-    this.bookService.getBooks().subscribe((data: any) => { this.books = data }, (e) => { if ((e.message).includes('404')) { console.log('Книг нет') } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
+    this.bookService.getBooks().subscribe((data: any) => { this.books = data }, (e) => { if ((e.message).includes('404')) { console.log('Книг нет'); this.books=[]} else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
   }
 
   addFavorite(book: IBook) {
@@ -53,7 +53,7 @@ export class BookLibraryComponent implements OnInit {
     const dialogRef = this.dialog.open(BookLibraryDialog);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.bookService.deleteBook(book).subscribe(() => { this.getBooks() });
+        this.bookService.deleteBook(book).subscribe((data) => { this.getBooks(); this.bookService.getToDashboard() });
       } else {
         return
       }

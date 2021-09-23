@@ -55,13 +55,13 @@ class BooksController {
                 const favorite = await userBooks.find({ userName: login })
                 if (favorite.length > 0) {
                     let booksId = [];
-                    for(let i = 0; i < favorite.length; i++) {
-                       booksId[i] = favorite[i]._id
+                    for (let i = 0; i < favorite.length; i++) {
+                        booksId[i] = favorite[i].bookId
                     }
-                    const getFav = await Books.find({_id: booksId})
+                    const getFav = await Books.find({ _id: booksId })
                     res.json(getFav)
                 } else {
-                    res.json({ message: 'Not Found' })
+                    res.status(404).json({ message: 'Not Found' })
                 }
             }
         } catch (e) {
@@ -73,9 +73,9 @@ class BooksController {
             const token = verifyJWT(req.body.token)
             const login = token.data.login
             const bookId = req.body.bookId
-            const deleteFavorite = await userBooks.findOneAndDelete({ userName: login, _id: bookId })
+            const deleteFavorite = await userBooks.findOneAndDelete({ userName: login, bookId: bookId })
             if (!deleteFavorite) {
-                const addFavorite = await userBooks.create({ userName: login, _id: bookId })
+                const addFavorite = await userBooks.create({ userName: login, bookId: bookId })
                 res.json({ bookId: addFavorite.bookId, message: 'Successfully added to favorites' })
             } else {
                 res.send(`bookId: ${bookId} was deleted`)
@@ -106,7 +106,12 @@ class BooksController {
         try {
             const bookId = req.body.id
             const deleteBook = await Books.findByIdAndDelete(bookId)
-            const f = await userBooks.find()
+            const favorite = await userBooks.find({ bookId: bookId })
+            if (favorite.length > 0) {
+                for (let i = 0; i < favorite.length; i++) {
+                    await userBooks.findByIdAndDelete(favorite[i]._id)
+                }
+            }
             if (deleteBook.picture) {
                 unlink(`backend/static/${deleteBook.picture}`, (err) => {
                     if (err) throw err;

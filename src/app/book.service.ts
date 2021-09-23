@@ -57,7 +57,7 @@ export class BookService {
     this.variableService.errorMessage = false;
     this.variableService.spinner = true;
     const token = localStorage.getItem('token');
-    return this.http.get(`http://localhost:5000/library/dashboard/${token}`).subscribe((data: any) => { this.variableService.favorite = data }, (e) => { if (e.message) { e.message } else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
+    return this.http.get(`http://localhost:5000/library/dashboard/${token}`).subscribe((data: any) => { this.variableService.favorite = data;}, (e) => { if ((e.message).includes('404')){ this.variableService.favorite= []} else { this.variableService.errorMessage = true; } }).add(() => this.variableService.spinner = false);
   }
 
   deleteBook(book: IBook) {
