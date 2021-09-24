@@ -67,7 +67,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
     if (token != null) {
       return this.http.get(`${this.authUrl}user/${token}`)
-        .subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => { e.message });
+        .subscribe((data: any) => { this.variableService.getUserName(data.login);}, (e) => { e.message });
     } else {
       return
     }

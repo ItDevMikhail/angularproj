@@ -2,7 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import router from './router.js'
 import booksRouter from './booksRouter.js'
-import fileUpload from 'express-fileupload'
+import cookieParser from 'cookie-parser'
 
 const PORT = process.env.PORT || 5000
 
@@ -10,8 +10,10 @@ const app = express();
 
 const mongoUrl = 'mongodb+srv://user:user@cluster0.1cstu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
+
 app.use(express.json())
 app.use(express.static('backend/static'))
+app.use(cookieParser())
 
 
 app.use(function (req, res, next) {
@@ -22,7 +24,6 @@ app.use(function (req, res, next) {
 });
 app.use('/users', router)
 app.use('/library', booksRouter)
-app.use(fileUpload({}))
 
 
 async function start() {

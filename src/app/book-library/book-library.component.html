@@ -49,8 +49,8 @@
             </td>
         </tr>
     </table>
-    <table mat-table class="library__table">
-        <tr *ngIf='this.variableService.favorite.length > 0'>
+    <table mat-table class="library__table" *ngIf='this.variableService.favorite.length > 0'>
+        <tr>
             <th>filterFavorite</th>
         </tr>
         <tr *ngFor="let book of variableService.books | filterFavorite:this.variableService.favorite">

@@ -5,14 +5,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
     transform(books: any, filter?: any): any {
-        for (let i = 0; i < filter.length; i++) {
-            const a = books.filter((book: any) => book.name = filter[i].name)
-            if (a) {
-                return filter
-            } else {
-                return false
+        let newArray = [];
+        for (let i = 0; i < books.length; i++) {
+            for (let j = 0; j < filter.length; j++) {
+                if (books[i].name == filter[j].name) {
+                    newArray[j] = filter[j]
+                }
             }
         }
-        return false
+        return newArray
     }
 }

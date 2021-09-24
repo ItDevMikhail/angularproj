@@ -48,13 +48,15 @@ class AuthController {
     async getUserName(req, res) {
         try {
             const token = req.params
+            console.log(req.cookies)
+            cookie.log(req.headers['Set'])
             if (!token) {
                 res.status(401)
             } else {
                 const loginToken = verifyJWT(token.token)
                 const login = loginToken.data.login
                 const favorite = await Auth.findOne({ login: login })
-            
+                res.cookie('token', login, { maxAge: 3000 * 300})
                 res.json({ login: favorite.login })
             }
         } catch (e) {
