@@ -19,13 +19,13 @@ import { pipe } from 'rxjs';
 export class BookLibraryComponent implements OnInit {
   @Input() diameter: number = 50
   search: string = '';
-  modelChanged: Subject<string> = new Subject<string>();
+  searchChanged: Subject<string> = new Subject<string>();
 
   constructor(private bookService: BookService,
     public variableService: SupportVariablesService,
     private authService: AuthService,
     public dialog: MatDialog) {
-    this.modelChanged.pipe(
+    this.searchChanged.pipe(
       debounceTime(500), distinctUntilChanged())
       .subscribe((search: string) => { this.search = search; this.bookService.getSearch(this.search) });
   }
@@ -56,8 +56,8 @@ export class BookLibraryComponent implements OnInit {
     this.bookService.addFavorite(book)
 
   }
-  changed(text: string) {
-    this.modelChanged.next(text);
+  changed(searchValue: string) {
+    this.searchChanged.next(searchValue);
   }
   searchBook() {
     console.log(this.search)

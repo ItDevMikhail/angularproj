@@ -54,7 +54,8 @@ class AuthController {
                 const loginToken = verifyJWT(token.token)
                 const login = loginToken.data.login
                 const favorite = await Auth.findOne({ login: login })
-                return res.json({ login: favorite.login })
+            
+                res.json({ login: favorite.login })
             }
         } catch (e) {
             res.status(500).json(e)

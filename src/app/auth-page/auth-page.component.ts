@@ -8,9 +8,9 @@ import { CheckFormService } from '../check-form.service';
   styleUrls: ['./auth-page.component.scss']
 })
 export class AuthPageComponent {
-  disabledButton = false;
-  login: String | undefined;
-  password: String | undefined;
+  disabledButton: boolean = false;
+  login?: string;
+  password?: string;
 
   constructor(private authService: AuthService,
     private checkForm: CheckFormService) { }
@@ -24,9 +24,7 @@ export class AuthPageComponent {
       return false;
     }    
     this.disabledButton = true;
-    setTimeout(() => {
-      this.disabledButton = false;
-    }, 700)
-    this.authService.authUser(user)
+    
+    this.authService.authUser(user).add(()=>{this.disabledButton = false});
   }
 }

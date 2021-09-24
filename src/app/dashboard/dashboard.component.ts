@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
-import { IBook } from '../iBook';
 import { SupportVariablesService } from '../support-variables.service';
 
 @Component({

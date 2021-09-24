@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BookService } from '../book.service';
 import { IBook } from '../iBook';
 import { CheckFormService } from '../check-form.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-book',
@@ -13,15 +14,17 @@ export class CreateBookComponent {
     name: '',
     description: ''
   };
-  responseBook: IBook | undefined;
+  responseBook?: IBook;
+
   constructor(private bookService: BookService,
     public bookServiceProp: BookService,
     private checkForm: CheckFormService) { }
 
-  add(books: IBook): any {
-    let final_data: any;
+  add(books: IBook): void | boolean {
+    let final_data: JSON | FormData;
+
     if (!this.checkForm.validationCreateBook(books)) {
-      return false
+      return false;
     }
     const formData = new FormData();
     formData.append('books', JSON.stringify(books));
@@ -31,11 +34,10 @@ export class CreateBookComponent {
     } else {
       final_data = formData;
     }
-    this.bookServiceProp.disabledButton = true
-    setTimeout(() => { this.bookServiceProp.disabledButton = false }, 800)
-
-    this.bookService.createBook(final_data)
+    this.bookServiceProp.disabledButton = true;
+    this.bookService.createBook(final_data).add(()=> this.bookServiceProp.disabledButton = false);
   }
+
   addPicture(event: any){
     this.bookService.addPicture(event)
   }

@@ -8,16 +8,16 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./register-page.component.scss']
 })
 export class RegisterPageComponent {
-  disabledButton = false;
-  login: String | undefined;
-  email: String | undefined;
-  password: String | undefined;
-  confirmPass: String | undefined;
+  disabledButton: boolean = false;
+  login?: string;
+  email?: string;
+  password?: string;
+  confirmPass?: string;
 
   constructor(private checkForm: CheckFormService,
     private authService: AuthService) { }
 
-  userRegister(): any {
+  userRegister(): void | boolean {
     const user = {
       login: this.login,
       email: this.email,
@@ -27,11 +27,7 @@ export class RegisterPageComponent {
       return false;
     }
     
-    this.disabledButton = true;
-    setTimeout(() => {
-      this.disabledButton = false;
-    }, 500)
-    
-    this.authService.registerUser(user)
+    this.disabledButton = true;    
+    this.authService.registerUser(user).add(()=>{ this.disabledButton = false})
   }
 }

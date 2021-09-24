@@ -34,6 +34,7 @@ import { SupportVariablesService } from './support-variables.service';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BookLibraryDialog } from './book-library/book-library.component';
+import { FilterPipe } from './custom-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,8 @@ import { BookLibraryDialog } from './book-library/book-library.component';
     MessageBoxComponent,
     DashboardComponent,
     BookLibraryDialog,
+    FilterPipe,
+
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,6 @@ import { BookLibraryDialog } from './book-library/book-library.component';
     MatProgressSpinnerModule,
     MaterialFileInputModule,
     MatDialogModule,
-
   ],
   providers: [BookService, AuthService, CheckFormService, AuthGuard, MessageService, SupportVariablesService],
   bootstrap: [AppComponent]

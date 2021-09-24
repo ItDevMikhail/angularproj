@@ -9,7 +9,7 @@ export class CheckFormService {
 
   constructor(private messageService: MessageService,) { }
 
-  validationRegistration(login: String | undefined, email: String | undefined, password: String | undefined, confirmPassword: String | undefined) {
+  validationRegistration(login?: string, email?: string, password?: string, confirmPassword?: string) {
     if (login == undefined || login == '') {
       this.messageService.add('Введите логин')
       return false;
@@ -35,7 +35,7 @@ export class CheckFormService {
       return false;
     }
   }
-  validationAuth(login: String | undefined, password: String | undefined){
+  validationAuth(login?: string, password?: string){
     if (login == undefined || login == ''){
       this.messageService.add('Введите логин')
       return false;

@@ -51,7 +51,7 @@ class BooksController {
                 const book = await Books.find();
                     res.json(book);
             } else {
-            const book = await Books.find({name: new RegExp('.*' + search + '.*')})
+            const book = await Books.find({name: {'$regex': search, '$options': 'i'}})
                 return res.json(book)
             }
         } catch (e) {
@@ -120,7 +120,7 @@ class BooksController {
         try {
             const bookId = req.body.id
             const deleteBook = await Books.findByIdAndDelete(bookId)
-            const favorite = await userBooks.deleteMany({ bookId: bookId })
+            await userBooks.deleteMany({ bookId: bookId })
             if (deleteBook.picture) {
                 unlink(`backend/static/${deleteBook.picture}`, (err) => {
                     if (err) throw err;

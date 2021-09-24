@@ -1,12 +1,13 @@
 <h2>Books library</h2>
 <form class="search__form">
-<mat-form-field class="search__field">
-    <mat-label>Search book</mat-label>
-    <input matInput type="text" name="login" [(ngModel)]="search" id="login" placeholder="Write login" (ngModelChange)='changed($event)' />
-    <button mat-icon-button>
-        <mat-icon>search</mat-icon>
-    </button>
-</mat-form-field>
+    <mat-form-field class="search__field">
+        <mat-label>Search book</mat-label>
+        <input matInput type="text" name="login" [(ngModel)]="search" id="login" placeholder="Write login"
+            (ngModelChange)='changed($event)' />
+        <button mat-icon-button>
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
 </form>
 <div class="container">
     <table mat-table class="library__table">
@@ -42,6 +43,21 @@
                 <div class="library__list">
                     <a routerLink="/library/detail/{{booK._id}}">
                         {{booK.name}}
+                    </a>
+                </div>
+                <mat-divider></mat-divider>
+            </td>
+        </tr>
+    </table>
+    <table mat-table class="library__table">
+        <tr *ngIf='this.variableService.favorite.length > 0'>
+            <th>filterFavorite</th>
+        </tr>
+        <tr *ngFor="let book of variableService.books | filterFavorite:this.variableService.favorite">
+            <td>
+                <div class="library__list">
+                    <a routerLink="/library/detail/{{book._id}}">
+                        {{book.name}}
                     </a>
                 </div>
                 <mat-divider></mat-divider>

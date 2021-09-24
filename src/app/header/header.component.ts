@@ -9,7 +9,7 @@ import { SupportVariablesService } from '../support-variables.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  success = false;
+  // success: boolean = false;
   constructor(public authService: AuthService,
     private router: Router,
     public variableService: SupportVariablesService) { }
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getUserName();
   }
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['users/auth'])
   }

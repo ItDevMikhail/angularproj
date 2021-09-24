@@ -9,6 +9,7 @@ import { SupportVariablesService } from './support-variables.service';
 })
 export class AuthService {
   token: string | null | undefined;
+  authUrl: string = 'http://localhost:5000/users/'
 
   constructor(private http: HttpClient,
     private messageService: MessageService,
@@ -19,7 +20,7 @@ export class AuthService {
     this.variableService.errorMessage = false;
     this.variableService.spinner = true;
     const body = { login: user.login, password: user.password };
-    return this.http.post('http://localhost:5000/users/auth', body).subscribe(
+    return this.http.post(this.authUrl + 'auth', body).subscribe(
       (data: any) => {
         if (data.login == user.login) {
           this.variableService.getUserName(data.login)
@@ -37,14 +38,14 @@ export class AuthService {
         } else {
           this.variableService.errorMessage = true;
         }
-      }).add(()=>{this.variableService.spinner = false});
+      }).add(() => { this.variableService.spinner = false });
   }
 
   registerUser(user: any): any {
     this.variableService.errorMessage = false;
     this.variableService.spinner = true;
     const body = { login: user.login, email: user.email, password: user.password };
-    return this.http.post('http://localhost:5000/users/register', body).subscribe(
+    return this.http.post(this.authUrl + 'register', body).subscribe(
       (data: any) => {
         if (data = user.login) {
           this.messageService.add('Пользователь добавлен')
@@ -59,13 +60,14 @@ export class AuthService {
           this.variableService.errorMessage = true;
         }
       }
-    ).add(()=>this.variableService.spinner = false);
+    ).add(() => this.variableService.spinner = false);
   }
 
-  getUserName(){
+  getUserName() {
     const token = localStorage.getItem('token');
-    if(token != null){
-    return this.http.get(`http://localhost:5000/users/user/${token}`).subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => { e.message });
+    if (token != null) {
+      return this.http.get(`${this.authUrl}user/${token}`)
+        .subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => { e.message });
     } else {
       return
     }
@@ -86,6 +88,15 @@ export class AuthService {
       return true;
     } else {
       return false
+    }
+  }
+  isLogin() {
+    const token = localStorage.getItem('token');
+    if (token != null) {
+      return this.http.get(`${this.authUrl}/auth/${token}`)
+        .subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => { e.message });
+    } else {
+      return
     }
   }
 }
