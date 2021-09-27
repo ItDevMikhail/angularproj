@@ -2,9 +2,10 @@ import jwt from 'jsonwebtoken'
 
 export function generateJWT(user) {
     const data = {
-        login: user.login
+        login: user.login,
+        id: Date.now()
     }
-    const time = '6h';
+    const time = '2h';
     const secret = 'Dahotchtoto';
     return jwt.sign({ data }, secret, { expiresIn: time });
 }

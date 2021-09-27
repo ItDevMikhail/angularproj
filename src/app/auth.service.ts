@@ -27,6 +27,9 @@ export class AuthService {
           this.saveToken(data)
           this.messageService.add('Вы успешно авторизовались', 1000)
           this.router.navigate(['library']);
+          setTimeout(() => {
+            this.router.navigate(['library']); 
+          }, 100);
         } else {
           console.log(data.message);
         }
@@ -47,7 +50,7 @@ export class AuthService {
     const body = { login: user.login, email: user.email, password: user.password };
     return this.http.post(this.authUrl + 'register', body).subscribe(
       (data: any) => {
-        if (data = user.login) {
+        if (data == user.login) {
           this.messageService.add('Пользователь добавлен')
           this.router.navigate(['users/auth']);
         } else {
@@ -80,6 +83,7 @@ export class AuthService {
 
   logout(): void {
     this.token = null;
+    this.variableService.auth = false
     localStorage.clear();
   }
 
@@ -93,10 +97,11 @@ export class AuthService {
   isLogin() {
     const token = localStorage.getItem('token');
     if (token != null) {
-      return this.http.get(`${this.authUrl}/auth/${token}`)
-        .subscribe((data: any) => { this.variableService.getUserName(data.login) }, (e) => { e.message });
+      return this.http.get(`${this.authUrl}auth/${token}`)
+      .subscribe(() => { this.variableService.auth = true;}, 
+      () => { this.variableService.auth = false; this.logout()});
     } else {
-      return
+      return false
     }
   }
 }

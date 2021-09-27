@@ -11,6 +11,7 @@ export class SupportVariablesService {
   errorMessage?: boolean;
   Favorite: any;
   books: IBook[] = [];
+  auth?: boolean;
   
   constructor() { }
 

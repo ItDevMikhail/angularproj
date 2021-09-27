@@ -48,16 +48,37 @@ class AuthController {
     async getUserName(req, res) {
         try {
             const token = req.params
-            console.log(req.cookies)
-            cookie.log(req.headers['Set'])
             if (!token) {
                 res.status(401)
             } else {
                 const loginToken = verifyJWT(token.token)
                 const login = loginToken.data.login
                 const favorite = await Auth.findOne({ login: login })
-                res.cookie('token', login, { maxAge: 3000 * 300})
-                res.json({ login: favorite.login })
+                if (favorite) {
+                    res.json({ login: favorite.login })
+                } else {
+                    res.status(401).json({ message: 'invalid token' });
+                }
+            }
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
+    async getValidToken(req, res) {
+        try {
+            const token = req.params
+            if (!token){
+                res.status(401)
+            } else {
+                const loginToken = verifyJWT(token.token)
+                const login = loginToken.data.login
+                const favorite = await Auth.findOne({ login: login })
+                if (favorite) {
+                    res.cookie('token', login, { maxAge: 3000 * 300 })
+                    res.json({ message: 'token is valid' })
+                } else {
+                    res.status(401).json({ message: 'invalid token' });
+                }
             }
         } catch (e) {
             res.status(500).json(e)
